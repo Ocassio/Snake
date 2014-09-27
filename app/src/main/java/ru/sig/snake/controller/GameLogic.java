@@ -1,6 +1,7 @@
 package ru.sig.snake.controller;
 
 import java.util.List;
+import java.util.Timer;
 
 import ru.sig.snake.model.Snake;
 import ru.sig.snake.model.node.FieldNode;
@@ -12,18 +13,20 @@ import ru.sig.snake.view.GameView;
  */
 public class GameLogic
 {
+    private static final long DEFAULT_DELAY = 1000;
+
     private GameView snakeView;
     private Snake snake;
     private int fieldHeight;
     private int fieldWidth;
     private List<FieldNode> food;
     private List<FieldNode> obstacles;
-    private SnakeTimer timer;
     private int difficulty;
 
     public void startGame(int difficulty)
     {
-
+        Timer timer = new Timer();
+        timer.schedule(new SnakeTimerTask(this), DEFAULT_DELAY);
     }
 
     public void pause()
@@ -41,9 +44,9 @@ public class GameLogic
 
     }
 
-    private int move()
+    public int move()
     {
-        return Integer.parseInt(null);
+        return 0;
     }
 
     private boolean checkState()

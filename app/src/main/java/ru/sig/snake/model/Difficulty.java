@@ -5,4 +5,5 @@ package ru.sig.snake.model;
  */
 public class Difficulty
 {
+
 }
