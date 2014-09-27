@@ -1,9 +1,11 @@
-package snake.sig.ru.snake;
+package snake.sig.ru.snake.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import snake.sig.ru.snake.R;
 
 
 public class MainActivity extends Activity {
