@@ -10,8 +10,9 @@ public abstract class FieldNode
 {
     private int x;
     private int y;
-    private int width;
-    private int height;
+
+    private static int width;
+    private static int height;
 
     public FieldNode()
     {
@@ -37,24 +38,24 @@ public abstract class FieldNode
         this.y = y;
     }
 
-    public int getWidth()
+    public static int getWidth()
     {
         return width;
     }
 
-    public void setWidth(int width)
+    public static void setWidth(int w)
     {
-        this.width = width;
+        width = w;
     }
 
-    public int getHeight()
+    public static int getHeight()
     {
         return height;
     }
 
-    public void setHeight(int height)
+    public static void setHeight(int h)
     {
-        this.height = height;
+        height = h;
     }
 
     abstract protected void onDraw(Canvas viewCanvas);

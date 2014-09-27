@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 
+import ru.sig.snake.controller.GameLogic;
 import ru.sig.snake.model.node.FieldNode;
 
 /**
@@ -12,7 +13,6 @@ import ru.sig.snake.model.node.FieldNode;
  */
 public class GameView extends View
 {
-
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
@@ -32,6 +32,7 @@ public class GameView extends View
 
     private void calculateNodeDimensions(int width, int height)
     {
-
+        FieldNode.setWidth(width / GameLogic.FIELD_WIDTH);
+        FieldNode.setHeight(height / GameLogic.FIELD_HEIGHT);
     }
 }
