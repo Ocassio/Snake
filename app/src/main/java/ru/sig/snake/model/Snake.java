@@ -3,7 +3,10 @@ package ru.sig.snake.model;
 import java.util.LinkedList;
 import java.util.List;
 
+import ru.sig.snake.exceptions.InvalidDirectionException;
 import ru.sig.snake.model.node.FieldNode;
+import ru.sig.snake.model.node.HeadSnakeNode;
+import ru.sig.snake.model.node.SnakeNode;
 
 /**
  * Created by Alexander Ionov on 27.09.14.
@@ -25,7 +28,6 @@ public class Snake
         body = new LinkedList<FieldNode>();
         setSatiety(length);
         setDirection(direction);
-
     }
 
     public FieldNode getHead()
@@ -55,7 +57,47 @@ public class Snake
 
     public void move()
     {
+        int x = 0;
+        int y = 0;
 
+        switch (direction)
+        {
+            case DIRECTION_NORTH:
+                x = getHead().getX();
+                y = getHead().getY() - 1;
+                break;
+
+            case DIRECTION_EAST:
+                x = getHead().getX() + 1;
+                y = getHead().getY();
+                break;
+
+            case DIRECTION_SOUTH:
+                x = getHead().getX();
+                y = getHead().getY() + 1;
+                break;
+
+            case DIRECTION_WEST:
+                x = getHead().getX() - 1;
+                y = getHead().getY();
+                break;
+
+            default:
+                throw new InvalidDirectionException();
+        }
+
+        body.add(0, new SnakeNode(getHead().getX(), getHead().getY()));
+        body.remove(1);
+        body.add(0, new HeadSnakeNode(x ,y));
+
+        if (satiety > 0)
+        {
+            satiety--;
+        }
+        else
+        {
+            body.remove(body.size() - 1);
+        }
     }
 
 }

@@ -35,7 +35,7 @@ public class GameView extends View
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.WHITE);
         canvas.drawPaint(paint);
-        FieldNode node = new SnakeNode().setX(0).setY(0);
+        FieldNode node = new SnakeNode(0, 0);
         node.onDraw(canvas);
 
     }
