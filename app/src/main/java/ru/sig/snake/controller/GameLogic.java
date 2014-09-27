@@ -14,6 +14,11 @@ import ru.sig.snake.view.GameView;
 public class GameLogic
 {
     private static final long DEFAULT_DELAY = 1000;
+    private static final int START_SNAKE_SIZE = 4;
+
+    private int POSITION_NODE_FREE = 0;
+    private int POSITION_NODE_FOOD = 1;
+    private int POSITION_NODE_OBSTACLE = 2;
 
     public static final int FIELD_WIDTH = 40;
     public static final int FIELD_HEIGHT = 40;
@@ -24,10 +29,20 @@ public class GameLogic
     private List<FieldNode> obstacles;
     private int difficulty;
 
+
     public void startGame(int difficulty)
     {
+
+        snake = new Snake(0,0,START_SNAKE_SIZE);  //todo: change coordinates to start
+
+
+
+
         Timer timer = new Timer();
         timer.schedule(new SnakeTimerTask(this), DEFAULT_DELAY);
+
+
+
     }
 
     public void pause()
@@ -47,16 +62,16 @@ public class GameLogic
 
     public int move()
     {
-        return 0;
+        return checkState();
     }
 
-    private boolean checkState()
+    private int checkState()
     {
-        return false;
+        return 0;           //compare positions of current snake nodes and food/obstacle nodes and return result (0,1,2)
     }
 
-    public void changeDirection(int x, int y)
+    public void changeDirection(int direction)
     {
-
+        snake.setDirection(direction);
     }
 }

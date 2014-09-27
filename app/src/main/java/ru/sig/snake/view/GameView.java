@@ -45,4 +45,7 @@ public class GameView extends View
         FieldNode.setWidth(width / GameLogic.FIELD_WIDTH);
         FieldNode.setHeight(height / GameLogic.FIELD_HEIGHT);
     }
+
+
+
 }
