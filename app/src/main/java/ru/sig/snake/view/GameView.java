@@ -10,6 +10,9 @@ import android.view.View;
  */
 public class GameView extends View
 {
+    private int fieldWidth = 1;
+    private int fieldHeight = 1;
+
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
@@ -20,9 +23,25 @@ public class GameView extends View
         super(context);
     }
 
+    public void setFieldWidth(int fieldWidth)
+    {
+        this.fieldWidth = fieldWidth;
+    }
+
+    public void setFieldHeight(int fieldHeight)
+    {
+        this.fieldHeight = fieldHeight;
+    }
+
     @Override
     protected void onDraw(Canvas canvas)
     {
+        calculateNodeDimensions(canvas.getWidth(), canvas.getHeight());
         super.onDraw(canvas);
+    }
+
+    private void calculateNodeDimensions(int width, int height)
+    {
+
     }
 }
