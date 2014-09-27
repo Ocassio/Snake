@@ -15,10 +15,11 @@ public class GameLogic
 {
     private static final long DEFAULT_DELAY = 1000;
 
+    public static final int FIELD_WIDTH = 80;
+    public static final int FIELD_HEIGHT = 80;
+
     private GameView snakeView;
     private Snake snake;
-    private int fieldHeight;
-    private int fieldWidth;
     private List<FieldNode> food;
     private List<FieldNode> obstacles;
     private int difficulty;

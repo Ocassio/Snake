@@ -5,13 +5,13 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 
+import ru.sig.snake.model.node.FieldNode;
+
 /**
  * Created by Valentin Goncharov on 27.09.2014.
  */
 public class GameView extends View
 {
-    private int fieldWidth = 1;
-    private int fieldHeight = 1;
 
     public GameView(Context context, AttributeSet attrs)
     {
@@ -21,16 +21,6 @@ public class GameView extends View
     public GameView(Context context)
     {
         super(context);
-    }
-
-    public void setFieldWidth(int fieldWidth)
-    {
-        this.fieldWidth = fieldWidth;
-    }
-
-    public void setFieldHeight(int fieldHeight)
-    {
-        this.fieldHeight = fieldHeight;
     }
 
     @Override
