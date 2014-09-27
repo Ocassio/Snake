@@ -15,13 +15,17 @@ public class Snake
     public static final int DIRECTION_SOUTH = 2;
     public static final int DIRECTION_WEST = 3;
 
+
     private final List<FieldNode> body;
     private int direction = DIRECTION_EAST;
     private int satiety = 0;
 
-    public Snake()
+    public Snake(int x, int y, int length)
     {
         body = new LinkedList<FieldNode>();
+        setSatiety(length);
+        setDirection(direction);
+
     }
 
     public FieldNode getHead()
