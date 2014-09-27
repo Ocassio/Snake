@@ -2,9 +2,10 @@ package ru.sig.snake.controller;
 
 import java.util.List;
 
-import snake.sig.ru.snake.model.FieldNode;
-import snake.sig.ru.snake.model.Snake;
-import snake.sig.ru.snake.view.GameView;
+import ru.sig.snake.model.Snake;
+import ru.sig.snake.model.node.FieldNode;
+import ru.sig.snake.view.GameView;
+
 
 /**
  * Created by Alexander Ionov on 27.09.14.

@@ -1,4 +1,4 @@
-package snake.sig.ru.snake.controller;
+package ru.sig.snake.controller;
 
 /**
  * Created by Aleksandr Shindin on 27.09.2014.
