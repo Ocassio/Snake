@@ -15,8 +15,8 @@ public class GameLogic
 {
     private static final long DEFAULT_DELAY = 1000;
 
-    public static final int FIELD_WIDTH = 80;
-    public static final int FIELD_HEIGHT = 80;
+    public static final int FIELD_WIDTH = 40;
+    public static final int FIELD_HEIGHT = 40;
 
     private GameView snakeView;
     private Snake snake;
@@ -59,10 +59,4 @@ public class GameLogic
     {
 
     }
-
-
-
-
-
-
 }

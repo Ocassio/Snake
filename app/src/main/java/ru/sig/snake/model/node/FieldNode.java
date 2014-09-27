@@ -8,16 +8,18 @@ import android.hardware.Camera;
  */
 public abstract class FieldNode
 {
-    private float x;
-    private float y;
+    private int x;
+    private int y;
     private static float widthNode;
     private static float heightNode;
 
-    public FieldNode()
+    public FieldNode(int x, int y)
     {
+        this.x = x;
+        this.y = y;
     }
 
-    public float getX()
+    public int getX()
     {
         return x;
     }
@@ -28,7 +30,7 @@ public abstract class FieldNode
         return this;
     }
 
-    public float getY()
+    public int getY()
     {
         return y;
     }
