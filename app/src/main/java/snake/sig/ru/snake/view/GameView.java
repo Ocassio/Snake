@@ -10,16 +10,19 @@ import android.view.View;
  */
 public class GameView extends View
 {
-    public GameView(Context context, AttributeSet attrs) {
+    public GameView(Context context, AttributeSet attrs)
+    {
         super(context, attrs);
     }
 
-    public GameView(Context context) {
+    public GameView(Context context)
+    {
         super(context);
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas)
+    {
         super.onDraw(canvas);
 
     }
