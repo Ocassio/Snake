@@ -1,4 +1,4 @@
-package snake.sig.ru.snake.view;
+package ru.sig.snake.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by Developer on 27.09.2014.
+ * Created by Valentin Goncharov on 27.09.2014.
  */
 public class GameView extends View
 {
@@ -24,6 +24,5 @@ public class GameView extends View
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
-
     }
 }

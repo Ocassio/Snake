@@ -1,4 +1,4 @@
-package snake.sig.ru.snake.controller;
+package ru.sig.snake.controller;
 
 import java.util.List;
 
