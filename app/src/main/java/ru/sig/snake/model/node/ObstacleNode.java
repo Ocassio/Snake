@@ -7,6 +7,11 @@ import android.graphics.Canvas;
  */
 public class ObstacleNode extends FieldNode
 {
+    public ObstacleNode(int x, int y)
+    {
+        super(x, y);
+    }
+
     @Override
     public void onDraw(Canvas viewCanvas)
     {

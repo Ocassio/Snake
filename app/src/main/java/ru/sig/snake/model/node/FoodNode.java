@@ -7,6 +7,11 @@ import android.graphics.Canvas;
  */
 public class FoodNode extends FieldNode
 {
+    public FoodNode(int x, int y)
+    {
+        super(x, y);
+    }
+
     @Override
     public void onDraw(Canvas viewCanvas)
     {

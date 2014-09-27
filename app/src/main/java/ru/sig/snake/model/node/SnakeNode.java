@@ -9,6 +9,12 @@ import android.graphics.Paint;
  */
 public class SnakeNode extends FieldNode
 {
+
+    public SnakeNode(int x, int y)
+    {
+        super(x, y);
+    }
+
     @Override
     public void onDraw(Canvas viewCanvas)
     {
