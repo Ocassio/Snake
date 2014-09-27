@@ -1,4 +1,4 @@
-package snake.sig.ru.snake;
+package ru.sig.snake;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
