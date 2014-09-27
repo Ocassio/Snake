@@ -8,55 +8,56 @@ import android.hardware.Camera;
  */
 public abstract class FieldNode
 {
-    private int x;
-    private int y;
-
-    private static int width;
-    private static int height;
+    private float x;
+    private float y;
+    private static float widthNode;
+    private static float heightNode;
 
     public FieldNode()
     {
     }
 
-    public int getX()
+    public float getX()
     {
         return x;
     }
 
-    public void setX(int x)
+    public FieldNode setX(int x)
     {
         this.x = x;
+        return this;
     }
 
-    public int getY()
+    public float getY()
     {
         return y;
     }
 
-    public void setY(int y)
+    public FieldNode setY(int y)
     {
         this.y = y;
+        return this;
     }
 
-    public static int getWidth()
+    public static float getWidth()
     {
-        return width;
+        return widthNode;
     }
 
-    public static void setWidth(int w)
+    public static void setWidth(float width)
     {
-        width = w;
+        widthNode = width;
     }
 
-    public static int getHeight()
+    public float getHeight()
     {
-        return height;
+        return heightNode;
     }
 
-    public static void setHeight(int h)
+    public static void setHeight(float height)
     {
-        height = h;
+        heightNode = height;
     }
 
-    abstract protected void onDraw(Canvas viewCanvas);
+    abstract public void onDraw(Canvas viewCanvas);
 }

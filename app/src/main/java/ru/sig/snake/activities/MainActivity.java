@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ru.sig.snake.R;
+import ru.sig.snake.view.GameView;
 
 
 public class MainActivity extends Activity {
@@ -13,7 +14,11 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        GameView gameView = new GameView(this);
+        setContentView(gameView);
+
+        //setContentView(R.layout.activity_main);
+
     }
 
 
