@@ -1,4 +1,4 @@
-package snake.sig.ru.snake.view;
+package ru.sig.snake.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
