@@ -1,4 +1,4 @@
-package snake.sig.ru.snake.model.node;
+package ru.sig.snake.model.node;
 
 import android.hardware.Camera;
 
