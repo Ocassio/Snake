@@ -62,4 +62,18 @@ public abstract class FieldNode
     }
 
     abstract public void onDraw(Canvas viewCanvas);
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o instanceof FieldNode)
+        {
+            FieldNode node = (FieldNode) o;
+            if (node.getX() == this.getX() && node.getY() == this.getY())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

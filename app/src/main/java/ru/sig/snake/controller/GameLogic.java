@@ -152,7 +152,7 @@ public class GameLogic
         return resultOfMove;
     }
 
-    public void generateFood()
+    private void generateFood()
     {
         Random random = new Random();
         int foodx = random.nextInt(FIELD_WIDTH);
@@ -163,7 +163,7 @@ public class GameLogic
 
     }
 
-    public boolean isHeadCrashed()
+    private boolean isHeadCrashed()
     {
         FieldNode headSnake = snake.getHead();
 

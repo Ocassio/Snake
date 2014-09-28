@@ -62,8 +62,6 @@ public class GameView extends View
         {
             food.onDraw(canvas);
         }
-
-
     }
 
     private void calculateNodeDimensions(int width, int height)
@@ -84,6 +82,7 @@ public class GameView extends View
     {
         this.nodesToDraw = nodesToDraw;
     }
+
     public void setSnake(Snake snake)
     {
         this.snake = snake;
@@ -93,8 +92,4 @@ public class GameView extends View
     {
         this.food = food;
     }
-
-
-
-
 }
