@@ -15,7 +15,7 @@ public class HeadSnakeNode extends SnakeNode
     }
 
     @Override
-    public void onDraw(Canvas viewCanvas)
+    public void draw(Canvas viewCanvas)
     {
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);

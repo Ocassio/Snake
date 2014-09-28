@@ -18,9 +18,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         GameView gameView = new GameView(this);
-        GameLogic gameLogic = new GameLogic();
+        GameLogic gameLogic = new GameLogic(gameView);
         setContentView(gameView);
-        gameLogic.startGame(0, gameView);
+        gameLogic.startGame(0);
         /*SnakeMediaPlayer snakeMediaPlayer = new SnakeMediaPlayer(this);
         snakeMediaPlayer.execute();*/
 

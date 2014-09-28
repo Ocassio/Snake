@@ -21,31 +21,44 @@ public class Snake
     public static final int DIRECTION_SOUTH = 2;
     public static final int DIRECTION_WEST = 3;
 
-    private GameView gameView;
-    private final List<FieldNode> body;
+    private final List<FieldNode> field;
+
+    private HeadSnakeNode head;
+    private SnakeNode tail;
+
     private int direction = DIRECTION_EAST;
     private int satiety = 0;
 
-    public Snake(int x, int y, int length)
+    public Snake(List<FieldNode> field, int x, int y, int length)
     {
-        body = new LinkedList<FieldNode>();
+        this.field = field;
 
-        body.add(new HeadSnakeNode(x,y));
+        head = new HeadSnakeNode(x, y);
+        field.add(new HeadSnakeNode(x,y));
 
+        SnakeNode nextPointer = head;
         for (int i = 1; i < length; i++)
         {
-            body.add(new SnakeNode(x - i,y));
+            SnakeNode node = new SnakeNode(x - i, y);
+
+            nextPointer.previous = node;
+            node.next = nextPointer;
+
+            nextPointer = node;
+            field.add(node);
         }
+
+        tail = nextPointer;
     }
 
-    public FieldNode getHead()
+    public HeadSnakeNode getHead()
     {
-        return body.get(0);
+        return head;
     }
 
-    public List<FieldNode> getBody()
+    public FieldNode getTail()
     {
-        return body;
+        return tail;
     }
 
     public void setDirection(int direction)
@@ -63,9 +76,9 @@ public class Snake
         this.satiety = satiety;
     }
 
-
-    public void move()
+    public FieldNode move()
     {
+        FieldNode result = null;
         int x;
         int y;
 
@@ -95,9 +108,22 @@ public class Snake
                 throw new InvalidDirectionException();
         }
 
-        body.add(0, new SnakeNode(getHead().getX(), getHead().getY()));
-        body.remove(body.size() - 1);
-        body.add(0, new HeadSnakeNode(x ,y));
+        HeadSnakeNode newHead = new HeadSnakeNode(x, y);
+        SnakeNode oldHead = new SnakeNode(getHead().getX(), getHead().getY());
+
+        head.previous.next = oldHead;
+        field.remove(head);
+        field.add(oldHead);
+
+        oldHead.next = newHead;
+        newHead.previous = oldHead;
+        if (field.contains(newHead))
+        {
+            result = field.get(field.indexOf(newHead));
+            field.remove(result);
+        }
+        field.add(newHead);
+        head = newHead;
 
         if (satiety > 0)
         {
@@ -105,15 +131,11 @@ public class Snake
         }
         else
         {
-            body.remove(body.size() - 1);
+            tail.next.previous = null;
+            field.remove(tail);
+            tail = tail.next;
         }
-    }
 
-    public void drawSnake(Canvas canvas)
-    {
-        for (FieldNode snakeNode : body)
-        {
-            snakeNode.onDraw(canvas);
-        }
+        return result;
     }
 }

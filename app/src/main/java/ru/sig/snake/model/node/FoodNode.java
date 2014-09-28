@@ -13,7 +13,7 @@ public class FoodNode extends FieldNode {
     }
 
     @Override
-    public void onDraw(Canvas viewCanvas) {
+    public void draw(Canvas viewCanvas) {
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);

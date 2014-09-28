@@ -13,7 +13,7 @@ public class ObstacleNode extends FieldNode
     }
 
     @Override
-    public void onDraw(Canvas viewCanvas)
+    public void draw(Canvas viewCanvas)
     {
 
     }

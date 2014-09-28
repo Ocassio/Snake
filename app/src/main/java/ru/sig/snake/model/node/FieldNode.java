@@ -61,7 +61,7 @@ public abstract class FieldNode
         heightNode = height;
     }
 
-    abstract public void onDraw(Canvas viewCanvas);
+    abstract public void draw(Canvas viewCanvas);
 
     @Override
     public boolean equals(Object o)

@@ -9,6 +9,8 @@ import android.graphics.Paint;
  */
 public class SnakeNode extends FieldNode
 {
+    public SnakeNode previous;
+    public SnakeNode next;
 
     public SnakeNode(int x, int y)
     {
@@ -16,7 +18,7 @@ public class SnakeNode extends FieldNode
     }
 
     @Override
-    public void onDraw(Canvas viewCanvas)
+    public void draw(Canvas viewCanvas)
     {
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
