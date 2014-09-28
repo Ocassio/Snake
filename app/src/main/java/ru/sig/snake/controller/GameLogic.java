@@ -21,7 +21,7 @@ import ru.sig.snake.view.GameView;
 public class GameLogic
 {
     private static final long DEFAULT_DELAY = 0;
-    private static final long DEFAULT_TIMER_PERIOD = 1000;
+    private static final long DEFAULT_TIMER_PERIOD = 300;
     private static final int START_SNAKE_SIZE = 4;
 
     private int POSITION_NODE_FREE = 0;            //this node is free
@@ -38,18 +38,13 @@ public class GameLogic
     private int difficulty;
     public Activity activity;
 
-    public void startGame(int difficulty, GameView snakeView, final Activity activity)
+    public void startGame(int difficulty, final GameView snakeView, final Activity activity)
     {
-
-        this.activity= activity;
-        snakeView.isFocused();
         this.snakeView = snakeView;
 
-
- //       snake = new Snake(0,10,START_SNAKE_SIZE);  //todo: change coordinates to start
-
         Timer timer = new Timer();
-        timer.schedule(new SnakeTimerTask(this),DEFAULT_DELAY,DEFAULT_TIMER_PERIOD) ;
+        timer.schedule(new SnakeTimerTask(this),1000,DEFAULT_TIMER_PERIOD) ;
+
         this.activity= (Activity) snakeView.getContext();
 
 
@@ -57,19 +52,19 @@ public class GameLogic
         {
             public void onSwipeTop() {
                 Toast.makeText(activity.getApplicationContext(), "top", Toast.LENGTH_SHORT).show();
-                snake.setDirection(Snake.DIRECTION_NORTH);
+                snakeView.getSnake().setDirection(Snake.DIRECTION_NORTH);
             }
             public void onSwipeRight() {
                 Toast.makeText(activity.getApplicationContext(), "right", Toast.LENGTH_SHORT).show();
-                snake.setDirection(Snake.DIRECTION_EAST);
+                snakeView.getSnake().setDirection(Snake.DIRECTION_EAST);
             }
             public void onSwipeLeft() {
                 Toast.makeText(activity.getApplicationContext(), "left", Toast.LENGTH_SHORT).show();
-                snake.setDirection(Snake.DIRECTION_WEST);
+                snakeView.getSnake().setDirection(Snake.DIRECTION_WEST);
             }
             public void onSwipeBottom() {
                 Toast.makeText(activity.getApplicationContext(), "bottom", Toast.LENGTH_SHORT).show();
-                snake.setDirection(Snake.DIRECTION_SOUTH);
+                snakeView.getSnake().setDirection(Snake.DIRECTION_SOUTH);
             }
         });
 
@@ -92,7 +87,14 @@ public class GameLogic
 
     public int move()
     {
-        snakeView.invalidate();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                snakeView.getSnake().move();
+                snakeView.invalidate();
+            }
+        });
+
         return checkState();
     }
 

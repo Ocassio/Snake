@@ -52,6 +52,11 @@ public class GameView extends View
         FieldNode.setHeight(height / GameLogic.FIELD_HEIGHT);
     }
 
+    public Snake getSnake()
+    {
+        return snake;
+    }
+
 
 
 

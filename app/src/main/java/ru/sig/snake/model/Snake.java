@@ -99,7 +99,7 @@ public class Snake
                 throw new InvalidDirectionException();
         }
 
-     //   body.add(0, new SnakeNode(getHead().getX(), getHead().getY()));    //for what?
+        body.add(0, new SnakeNode(getHead().getX(), getHead().getY()));    //for what?
         body.remove(body.size() - 1);
         body.add(0, new HeadSnakeNode(x ,y));
 
@@ -115,8 +115,11 @@ public class Snake
 
     public void drawSnake(Canvas canvas)
     {
-        body.get(0).onDraw(canvas);
-        body.get(body.size() - 1).onDraw(canvas);
+        for (FieldNode snakeNode : body)
+        {
+            snakeNode.onDraw(canvas);
+        }
+
 
     }
 

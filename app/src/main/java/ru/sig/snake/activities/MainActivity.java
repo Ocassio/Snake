@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GameView gameView = new GameView(getApplicationContext());
+        GameView gameView = new GameView(this);
         GameLogic gameLogic = new GameLogic();
         setContentView(gameView);
 
