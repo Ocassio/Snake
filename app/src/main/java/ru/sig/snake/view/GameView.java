@@ -11,6 +11,8 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 
+import java.util.List;
+
 import ru.sig.snake.controller.GameLogic;
 import ru.sig.snake.model.Snake;
 import ru.sig.snake.model.node.FieldNode;
@@ -23,8 +25,7 @@ import ru.sig.snake.model.node.SnakeNode;
  */
 public class GameView extends View
 {
-    private Snake snake;
-    private FieldNode food;
+    private List<FieldNode> nodesToDraw;
 
     public GameView(Context context, AttributeSet attrs)
     {
@@ -64,13 +65,10 @@ public class GameView extends View
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.WHITE);
         canvas.drawPaint(paint);
-        if (snake != null)
+        if (!nodesToDraw.isEmpty())
         {
-            snake.drawSnake(canvas);
-        }
-        if (food != null)
-        {
-            food.onDraw(canvas);
+            for (FieldNode fieldNode : nodesToDraw)
+                fieldNode.onDraw(canvas);
         }
 
 
@@ -82,15 +80,9 @@ public class GameView extends View
         FieldNode.setHeight(height / GameLogic.FIELD_HEIGHT);
     }
 
-
-    public void setSnake(Snake snake)
+    public void setNodesToDraw(List<FieldNode> nodesToDraw)
     {
-        this.snake = snake;
-    }
-
-    public void setFood(FieldNode food)
-    {
-        this.food = food;
+        this.nodesToDraw = nodesToDraw;
     }
 
 

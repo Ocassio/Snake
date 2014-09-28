@@ -9,6 +9,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -42,7 +43,7 @@ public class GameLogic
     private GameView snakeView;
     private Snake snake;
     private FieldNode food;
-    private List<FieldNode> obstacles;
+    private List<FieldNode> nodesToDraw;
     private int difficulty;
     public Activity activity;
     private Timer timer;
@@ -50,11 +51,12 @@ public class GameLogic
 
     public void startGame(int difficulty, final GameView snakeView)
     {
-
-
         snake= new Snake(10, 10, 14);
+        nodesToDraw = new LinkedList<FieldNode>();
         this.snakeView = snakeView;
-        snakeView.setSnake(snake);
+
+        nodesToDraw.addAll(snake.getBody());
+        snakeView.setNodesToDraw(nodesToDraw);
 
         timer = new Timer();
         timer.schedule(new SnakeTimerTask(this),DEFAULT_DELAY,SNAKE_SPEED) ;
@@ -62,12 +64,6 @@ public class GameLogic
         generateFood();
 
         this.activity= (Activity) snakeView.getContext();
-
-
-
-
-
-
 
         snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext()) {
             public void onSwipeTop() {
@@ -162,7 +158,8 @@ public class GameLogic
         int foodx = random.nextInt(FIELD_WIDTH);
         int foody = random.nextInt(FIELD_HEIGHT);
         food = new FoodNode(foodx,foody);
-        snakeView.setFood(food);
+        nodesToDraw.add(food);
+
     }
 
     public boolean isHeadCrashed()
