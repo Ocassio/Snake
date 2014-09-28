@@ -33,8 +33,8 @@ public class GameLogic
 
     private int resultOfMove;
     
-    public static int FIELD_WIDTH = 40;      //count of nodes in width of display
-    public static int FIELD_HEIGHT = 40;     //count of nodes in height of display
+    public final static int FIELD_WIDTH = 40;      //count of nodes in width of display
+    public final static int FIELD_HEIGHT = 40;     //count of nodes in height of display
 
     private int SNAKE_FOUND_NOTHING = 0;            //this node is free
     private int SNAKE_FOUND_FOOD = 1;            //on this node food
@@ -55,8 +55,7 @@ public class GameLogic
         nodesToDraw = new LinkedList<FieldNode>();
         this.snakeView = snakeView;
         snakeView.setSnake(snake);
-   //     nodesToDraw.addAll(snake.getBody());
-    //    snakeView.setNodesToDraw(nodesToDraw);
+
 
         timer = new Timer();
         timer.schedule(new SnakeTimerTask(this),DEFAULT_DELAY,SNAKE_SPEED) ;
@@ -64,6 +63,9 @@ public class GameLogic
         generateFood();
 
         this.activity= (Activity) snakeView.getContext();
+
+        MediaPlayer mediaPlayer1 = MediaPlayer.create(activity,R.raw.nyancat);
+        mediaPlayer1.start();
 
         snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext()) {
             public void onSwipeTop() {
@@ -158,7 +160,6 @@ public class GameLogic
         int foodx = random.nextInt(FIELD_WIDTH);
         int foody = random.nextInt(FIELD_HEIGHT);
         food = new FoodNode(foodx,foody);
-  //      nodesToDraw.add(food);
         snakeView.setFood(food);
 
     }
