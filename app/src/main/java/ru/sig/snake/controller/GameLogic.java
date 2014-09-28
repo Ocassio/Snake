@@ -42,7 +42,7 @@ public class GameLogic
         this.activity = activity;
         this.snakeView = snakeView;
 
-        snake = new Snake(0,10,START_SNAKE_SIZE);  //todo: change coordinates to start
+ //       snake = new Snake(0,10,START_SNAKE_SIZE);  //todo: change coordinates to start
 
         Timer timer = new Timer();
         timer.schedule(new SnakeTimerTask(this),DEFAULT_DELAY,DEFAULT_TIMER_PERIOD);

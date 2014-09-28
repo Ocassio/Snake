@@ -28,11 +28,10 @@ public class Snake
 
     public Snake(int x, int y, int length)
     {
-        this.gameView = gameView;
         body = new LinkedList<FieldNode>();
         setSatiety(length);
         setDirection(direction);
-        FieldNode head = new HeadSnakeNode(0,0);
+        FieldNode head = new HeadSnakeNode(0,10);
         body.add(head);
     }
 
