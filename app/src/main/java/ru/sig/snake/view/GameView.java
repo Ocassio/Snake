@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -51,6 +52,7 @@ public class GameView extends View
             GameLogic.FIELD_HEIGHT += result;
         }
         System.out.println(metricsB.widthPixels + " " + metricsB.heightPixels);
+
     }
 
     @Override

@@ -4,15 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Toast;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ru.sig.snake.R;
 import ru.sig.snake.model.Snake;
 import ru.sig.snake.model.node.FieldNode;
 import ru.sig.snake.model.node.FoodNode;
@@ -44,9 +46,12 @@ public class GameLogic
     private int difficulty;
     public Activity activity;
     private Timer timer;
+    private MediaPlayer mediaPlayer;
 
     public void startGame(int difficulty, final GameView snakeView)
     {
+
+
         snake= new Snake(10, 10, 14);
         this.snakeView = snakeView;
         snakeView.setSnake(snake);
@@ -59,20 +64,27 @@ public class GameLogic
         this.activity= (Activity) snakeView.getContext();
 
 
-        snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext())
-        {
+
+
+
+
+
+        snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext()) {
             public void onSwipeTop() {
                 if (Snake.DIRECTION_SOUTH != snake.getDirection())
                     snake.setDirection(Snake.DIRECTION_NORTH);
             }
+
             public void onSwipeRight() {
                 if (Snake.DIRECTION_WEST != snake.getDirection())
                     snake.setDirection(Snake.DIRECTION_EAST);
             }
+
             public void onSwipeLeft() {
                 if (Snake.DIRECTION_EAST != snake.getDirection())
                     snake.setDirection(Snake.DIRECTION_WEST);
             }
+
             public void onSwipeBottom() {
                 if (Snake.DIRECTION_NORTH != snake.getDirection())
                     snake.setDirection(Snake.DIRECTION_SOUTH);
