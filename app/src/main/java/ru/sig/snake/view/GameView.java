@@ -38,25 +38,6 @@ public class GameView extends View
     public GameView(Context context)
     {
         super(context);
-        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
-        DisplayMetrics metricsB = new DisplayMetrics();
-        display.getMetrics(metricsB);
-        if (metricsB.widthPixels < metricsB.heightPixels)
-        {
-           int result = metricsB.heightPixels - metricsB.widthPixels;
-           result %= GameLogic.FIELD_WIDTH;
-           System.out.println(result);
-            GameLogic.FIELD_WIDTH += result;
-        }
-        else
-        {
-            int result = metricsB.widthPixels - metricsB.heightPixels;
-            result %= GameLogic.FIELD_HEIGHT;
-            System.out.println(result);
-            GameLogic.FIELD_HEIGHT += result;
-        }
-        System.out.println(metricsB.widthPixels + " " + metricsB.heightPixels);
-
     }
 
     @Override
@@ -87,8 +68,16 @@ public class GameView extends View
 
     private void calculateNodeDimensions(int width, int height)
     {
-        FieldNode.setWidth(width / GameLogic.FIELD_WIDTH);
-        FieldNode.setHeight(height / GameLogic.FIELD_HEIGHT);
+        if (GameLogic.FIELD_WIDTH < GameLogic.FIELD_HEIGHT)
+        {
+            FieldNode.setWidth(width / GameLogic.FIELD_WIDTH);
+            FieldNode.setHeight(width / GameLogic.FIELD_HEIGHT);
+        }
+        else
+        {
+            FieldNode.setWidth(height / GameLogic.FIELD_WIDTH);
+            FieldNode.setHeight(height / GameLogic.FIELD_HEIGHT);
+        }
     }
 
     public void setNodesToDraw(List<FieldNode> nodesToDraw)
