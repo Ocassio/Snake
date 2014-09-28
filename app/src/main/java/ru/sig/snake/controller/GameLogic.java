@@ -151,24 +151,7 @@ public class GameLogic
 
         if (resultOfMove == SNAKE_FOUND_OBSTACLE)
         {
-            timer.cancel();
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setTitle("You lose, motherfucker!");
-            builder.setMessage("Do you want restart game?");
-            builder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    startGame(0);
-                }
-            });
-            builder.setNegativeButton("Fuck you!", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                }
-            });
-            builder.create();
-            builder.show();
+            gameover();
         }
 
         return resultOfMove;
@@ -201,6 +184,29 @@ public class GameLogic
             return true;
 
         return false;
+    }
+
+    private void gameover()
+    {
+        timer.cancel();
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setCancelable(false);
+        builder.setTitle("You lose, motherfucker!");
+        builder.setMessage("Do you want restart game?");
+        builder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startGame(0);
+            }
+        });
+        builder.setNegativeButton("Fuck you!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.create();
+        builder.show();
     }
 
 }
