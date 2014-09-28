@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import ru.sig.snake.R;
 import ru.sig.snake.controller.GameLogic;
+//import ru.sig.snake.controller.SnakeMediaPlayer;
 
 import ru.sig.snake.view.GameView;
 
@@ -20,6 +21,8 @@ public class MainActivity extends Activity {
         GameLogic gameLogic = new GameLogic();
         setContentView(gameView);
         gameLogic.startGame(0,gameView);
+        /*SnakeMediaPlayer snakeMediaPlayer = new SnakeMediaPlayer(this);
+        snakeMediaPlayer.execute();*/
 
     }
 
