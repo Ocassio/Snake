@@ -51,7 +51,7 @@ public class GameLogic
 
     public void startGame(int difficulty, final GameView snakeView)
     {
-        snake = new Snake(1, 1, 38);
+        snake = new Snake(1, 1, 10);
         nodesToDraw = new LinkedList<FieldNode>();
         this.snakeView = snakeView;
         snakeView.setSnake(snake);
@@ -64,6 +64,9 @@ public class GameLogic
 
 
         this.activity = (Activity) snakeView.getContext();
+
+        MediaPlayer mediaPlayer1 = MediaPlayer.create(activity,R.raw.nyancat);
+        mediaPlayer1.start();
 
         snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext()) {
             public void onSwipeTop() {
