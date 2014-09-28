@@ -18,7 +18,6 @@ public class StartActivity extends Activity
         setContentView(R.layout.activity_main);
     }
 
-
     public void startGame(View view)
     {
         Intent intent = new Intent(StartActivity.this,GameActivity.class);

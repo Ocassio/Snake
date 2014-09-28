@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Start Snake</string>
+    <string name="app_name">Snake</string>
     <string name="snakeGame">Game</string>
+
+    <string name="newGame">New Game</string>
+
     <string name="action_settings">Settings</string>
+
+    <string name="loseTitle">You lose, motherfucker!</string>
+    <string name="loseMessage">Do you want restart game?</string>
+    <string name="yes">Yes</string>
+    <string name="no">Fuck you!</string>
 
 </resources>

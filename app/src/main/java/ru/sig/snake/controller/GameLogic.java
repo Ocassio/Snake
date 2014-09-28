@@ -190,17 +190,18 @@ public class GameLogic
         timer.cancel();
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setCancelable(false);
-        builder.setTitle("You lose, motherfucker!");
-        builder.setMessage("Do you want restart game?");
-        builder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+        builder.setTitle(activity.getString(R.string.loseTitle));
+        builder.setMessage(activity.getString(R.string.loseMessage));
+        builder.setPositiveButton(activity.getString(R.string.yes),new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 startGame(0);
             }
         });
-        builder.setNegativeButton("Fuck you!", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(activity.getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                activity.finish();
                 dialogInterface.cancel();
             }
         });
