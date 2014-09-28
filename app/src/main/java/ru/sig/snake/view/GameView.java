@@ -66,7 +66,7 @@ public class GameView extends View
 
     private void calculateNodeDimensions(int width, int height)
     {
-        int min = (GameLogic.FIELD_WIDTH < GameLogic.FIELD_HEIGHT
+        int min = (width < height
                 ? width : height);
             FieldNode.setWidth(min / GameLogic.FIELD_WIDTH);
             FieldNode.setHeight(min / GameLogic.FIELD_HEIGHT);

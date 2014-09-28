@@ -51,19 +51,19 @@ public class GameLogic
 
     public void startGame(int difficulty, final GameView snakeView)
     {
-        snake= new Snake(20, 20, 14);
+        snake = new Snake(1, 1, 38);
         nodesToDraw = new LinkedList<FieldNode>();
         this.snakeView = snakeView;
         snakeView.setSnake(snake);
-   //     nodesToDraw.addAll(snake.getBody());
+    //    nodesToDraw.addAll(snake.getBody());
     //    snakeView.setNodesToDraw(nodesToDraw);
+        generateFood();
 
         timer = new Timer();
         timer.schedule(new SnakeTimerTask(this),DEFAULT_DELAY,SNAKE_SPEED) ;
 
-        generateFood();
 
-        this.activity= (Activity) snakeView.getContext();
+        this.activity = (Activity) snakeView.getContext();
 
         snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext()) {
             public void onSwipeTop() {
@@ -125,7 +125,7 @@ public class GameLogic
             resultOfMove = SNAKE_FOUND_FOOD;
             snake.setSatiety(2);
             generateFood();
-            SNAKE_SPEED+= 20;
+            SNAKE_SPEED += 20;
         }
         else if (isHeadCrashed())
         {
