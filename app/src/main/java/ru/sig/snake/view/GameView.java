@@ -18,6 +18,7 @@ import ru.sig.snake.model.node.SnakeNode;
  */
 public class GameView extends View
 {
+    private Snake snake;
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
@@ -31,14 +32,16 @@ public class GameView extends View
     @Override
     protected void onDraw(Canvas canvas)
     {
-
         calculateNodeDimensions(canvas.getWidth(), canvas.getHeight());
         super.onDraw(canvas);
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.WHITE);
         canvas.drawPaint(paint);
-        Snake snake= new Snake(0, 0, Snake.DIRECTION_EAST);
+        if (snake == null)
+        {
+            snake= new Snake(10, 10, 4);
+        }
         snake.drawSnake(canvas);
 
     }
@@ -48,6 +51,7 @@ public class GameView extends View
         FieldNode.setWidth(width / GameLogic.FIELD_WIDTH);
         FieldNode.setHeight(height / GameLogic.FIELD_HEIGHT);
     }
+
 
 
 

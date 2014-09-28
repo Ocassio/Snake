@@ -1,12 +1,14 @@
 package ru.sig.snake.controller;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import ru.sig.snake.model.Snake;
 import ru.sig.snake.model.node.FieldNode;
@@ -39,13 +41,17 @@ public class GameLogic
     public void startGame(int difficulty, GameView snakeView, final Activity activity)
     {
 
-        this.activity = activity;
+        this.activity= activity;
+        snakeView.isFocused();
         this.snakeView = snakeView;
+
 
  //       snake = new Snake(0,10,START_SNAKE_SIZE);  //todo: change coordinates to start
 
         Timer timer = new Timer();
-        timer.schedule(new SnakeTimerTask(this),DEFAULT_DELAY,DEFAULT_TIMER_PERIOD);
+        timer.schedule(new SnakeTimerTask(this),DEFAULT_DELAY,DEFAULT_TIMER_PERIOD) ;
+        this.activity= (Activity) snakeView.getContext();
+
 
         snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext())
         {
@@ -86,6 +92,7 @@ public class GameLogic
 
     public int move()
     {
+        snakeView.invalidate();
         return checkState();
     }
 

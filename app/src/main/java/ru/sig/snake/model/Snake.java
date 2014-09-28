@@ -28,11 +28,19 @@ public class Snake
 
     public Snake(int x, int y, int length)
     {
+
         body = new LinkedList<FieldNode>();
         setSatiety(length);
         setDirection(direction);
-        FieldNode head = new HeadSnakeNode(0,10);
-        body.add(head);
+
+
+        body.add(new HeadSnakeNode(x,y));
+
+        for (int i = 1; i < length; i++)
+        {
+            body.add(new SnakeNode(x - i,y));
+        }
+
     }
 
     public FieldNode getHead()
@@ -62,8 +70,8 @@ public class Snake
 
     public void move()
     {
-        int x = 0;
-        int y = 0;
+        int x;
+        int y;
 
         switch (direction)
         {
@@ -91,8 +99,8 @@ public class Snake
                 throw new InvalidDirectionException();
         }
 
-        body.add(0, new SnakeNode(getHead().getX(), getHead().getY()));
-        body.remove(1);
+     //   body.add(0, new SnakeNode(getHead().getX(), getHead().getY()));    //for what?
+        body.remove(body.size() - 1);
         body.add(0, new HeadSnakeNode(x ,y));
 
         if (satiety > 0)
@@ -107,10 +115,9 @@ public class Snake
 
     public void drawSnake(Canvas canvas)
     {
-        for (FieldNode snakeNode : body)
-        {
-            snakeNode.onDraw(canvas);
-        }
+        body.get(0).onDraw(canvas);
+        body.get(body.size() - 1).onDraw(canvas);
+
     }
 
 }

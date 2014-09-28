@@ -13,11 +13,14 @@ public class SnakeTimerTask extends TimerTask
     public SnakeTimerTask(GameLogic logic)
     {
         this.logic = logic;
+
     }
 
     @Override
     public void run()
     {
+
+
         logic.move();
     }
 }
