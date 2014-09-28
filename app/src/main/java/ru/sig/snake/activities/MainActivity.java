@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
         GameView gameView = new GameView(this);
         GameLogic gameLogic = new GameLogic();
         setContentView(gameView);
-        gameLogic.startGame(0,gameView);
+        gameLogic.startGame(0, gameView);
         /*SnakeMediaPlayer snakeMediaPlayer = new SnakeMediaPlayer(this);
         snakeMediaPlayer.execute();*/
 
