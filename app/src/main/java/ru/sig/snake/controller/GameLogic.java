@@ -85,7 +85,7 @@ public class GameLogic
             }
         });
 
-        new Runnable()
+        new Thread(new Runnable()
         {
             @Override
             public void run()
@@ -93,8 +93,7 @@ public class GameLogic
                 MediaPlayer mediaPlayer1 = MediaPlayer.create(activity, R.raw.nyancat);
                 mediaPlayer1.start();
             }
-        };
-
+        }).start();
     }
 
     public void pause()
@@ -133,7 +132,7 @@ public class GameLogic
                 resultOfMove = SNAKE_FOUND_FOOD;
                 snake.setSatiety(2);
                 generateFood();
-                SNAKE_SPEED += 20;
+                SNAKE_SPEED -= 20;
             }
             else if (moveResult instanceof SnakeNode || moveResult instanceof ObstacleNode)
             {
