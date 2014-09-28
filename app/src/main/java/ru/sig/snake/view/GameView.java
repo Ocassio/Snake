@@ -1,10 +1,13 @@
 package ru.sig.snake.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 
 import ru.sig.snake.controller.GameLogic;
@@ -30,6 +33,24 @@ public class GameView extends View
     public GameView(Context context)
     {
         super(context);
+        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
+        DisplayMetrics metricsB = new DisplayMetrics();
+        display.getMetrics(metricsB);
+        if (metricsB.widthPixels < metricsB.heightPixels)
+        {
+           int result = metricsB.heightPixels - metricsB.widthPixels;
+           result %= GameLogic.FIELD_WIDTH;
+           System.out.println(result);
+            GameLogic.FIELD_WIDTH += result;
+        }
+        else
+        {
+            int result = metricsB.widthPixels - metricsB.heightPixels;
+            result %= GameLogic.FIELD_HEIGHT;
+            System.out.println(result);
+            GameLogic.FIELD_HEIGHT += result;
+        }
+        System.out.println(metricsB.widthPixels + " " + metricsB.heightPixels);
     }
 
     @Override

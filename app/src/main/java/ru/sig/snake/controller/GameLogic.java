@@ -29,13 +29,13 @@ public class GameLogic
     private static final int START_SNAKE_SIZE = 4;
 
     private int resultOfMove;
+    
+    public static int FIELD_WIDTH = 40;      //count of nodes in width of display
+    public static int FIELD_HEIGHT = 40;     //count of nodes in height of display
 
     private int SNAKE_FOUND_NOTHING = 0;            //this node is free
     private int SNAKE_FOUND_FOOD = 1;            //on this node food
     private int SNAKE_FOUND_OBSTACLE = 2;        //on this node obstacle or snakeNode
-
-    public static final int FIELD_WIDTH = 40;      //count of nodes in width of display
-    public static final int FIELD_HEIGHT = 40;     //count of nodes in height of display
 
     private GameView snakeView;
     private Snake snake;
