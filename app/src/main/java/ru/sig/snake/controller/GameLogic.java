@@ -1,17 +1,21 @@
 package ru.sig.snake.controller;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import ru.sig.snake.model.Snake;
 import ru.sig.snake.model.node.FieldNode;
+import ru.sig.snake.model.node.FoodNode;
 import ru.sig.snake.view.GameView;
 
 
@@ -20,30 +24,37 @@ import ru.sig.snake.view.GameView;
  */
 public class GameLogic
 {
-    private static final long DEFAULT_DELAY = 0;
-    private static final long DEFAULT_TIMER_PERIOD = 300;
+    private static final long DEFAULT_DELAY = 100;
+    private static long SNAKE_SPEED = 200;
     private static final int START_SNAKE_SIZE = 4;
 
-    private int POSITION_NODE_FREE = 0;            //this node is free
-    private int POSITION_NODE_FOOD = 1;            //on this node food
-    private int POSITION_NODE_OBSTACLE = 2;        //on this node obstacle or snakeNode
+    private int resultOfMove;
+
+    private int SNAKE_FOUND_NOTHING = 0;            //this node is free
+    private int SNAKE_FOUND_FOOD = 1;            //on this node food
+    private int SNAKE_FOUND_OBSTACLE = 2;        //on this node obstacle or snakeNode
 
     public static final int FIELD_WIDTH = 40;      //count of nodes in width of display
     public static final int FIELD_HEIGHT = 40;     //count of nodes in height of display
 
     private GameView snakeView;
     private Snake snake;
-    private List<FieldNode> food;
+    private FieldNode food;
     private List<FieldNode> obstacles;
     private int difficulty;
     public Activity activity;
+    private Timer timer;
 
-    public void startGame(int difficulty, final GameView snakeView, final Activity activity)
+    public void startGame(int difficulty, final GameView snakeView)
     {
+        snake= new Snake(10, 10, 14);
         this.snakeView = snakeView;
+        snakeView.setSnake(snake);
 
-        Timer timer = new Timer();
-        timer.schedule(new SnakeTimerTask(this),1000,DEFAULT_TIMER_PERIOD) ;
+        timer = new Timer();
+        timer.schedule(new SnakeTimerTask(this),DEFAULT_DELAY,SNAKE_SPEED) ;
+
+        generateFood();
 
         this.activity= (Activity) snakeView.getContext();
 
@@ -51,20 +62,20 @@ public class GameLogic
         snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext())
         {
             public void onSwipeTop() {
-                Toast.makeText(activity.getApplicationContext(), "top", Toast.LENGTH_SHORT).show();
-                snakeView.getSnake().setDirection(Snake.DIRECTION_NORTH);
+                if (Snake.DIRECTION_SOUTH != snake.getDirection())
+                    snake.setDirection(Snake.DIRECTION_NORTH);
             }
             public void onSwipeRight() {
-                Toast.makeText(activity.getApplicationContext(), "right", Toast.LENGTH_SHORT).show();
-                snakeView.getSnake().setDirection(Snake.DIRECTION_EAST);
+                if (Snake.DIRECTION_WEST != snake.getDirection())
+                    snake.setDirection(Snake.DIRECTION_EAST);
             }
             public void onSwipeLeft() {
-                Toast.makeText(activity.getApplicationContext(), "left", Toast.LENGTH_SHORT).show();
-                snakeView.getSnake().setDirection(Snake.DIRECTION_WEST);
+                if (Snake.DIRECTION_EAST != snake.getDirection())
+                    snake.setDirection(Snake.DIRECTION_WEST);
             }
             public void onSwipeBottom() {
-                Toast.makeText(activity.getApplicationContext(), "bottom", Toast.LENGTH_SHORT).show();
-                snakeView.getSnake().setDirection(Snake.DIRECTION_SOUTH);
+                if (Snake.DIRECTION_NORTH != snake.getDirection())
+                    snake.setDirection(Snake.DIRECTION_SOUTH);
             }
         });
 
@@ -85,31 +96,78 @@ public class GameLogic
 
     }
 
-    public int move()
+    public void move()
     {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                snakeView.getSnake().move();
+                snake.move();
                 snakeView.invalidate();
+                checkState();
             }
         });
-
-        return checkState();
     }
 
     private int checkState()
     {
-        return 0;           //compare positions of current snake nodes and food/obstacle nodes and return result (0,1,2)
+
+        FieldNode snakeHead = snake.getHead();
+        if (snakeHead.getX() == food.getX() & snakeHead.getY() == food.getY())
+        {
+            resultOfMove = SNAKE_FOUND_FOOD;
+            snake.setSatiety(2);
+            generateFood();
+            SNAKE_SPEED+= 20;
+        }
+        else if (isHeadCrashed())
+        {
+            resultOfMove = SNAKE_FOUND_OBSTACLE;
+            timer.cancel();
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setTitle("You lose, motherfucker!");
+            builder.setMessage("Do you want restart game?");
+            builder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    startGame(0,snakeView);
+                }
+            });
+            builder.setNegativeButton("Fuck you!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+            builder.create();
+            builder.show();
+        }
+        return resultOfMove;
     }
 
-    public void changeDirection(int direction)
+    public void generateFood()
     {
-        snake.setDirection(direction);
+        Random random = new Random();
+        int foodx = random.nextInt(FIELD_WIDTH);
+        int foody = random.nextInt(FIELD_HEIGHT);
+        food = new FoodNode(foodx,foody);
+        snakeView.setFood(food);
     }
 
-    public boolean checkTouchDirection(View view, MotionEvent event)
+    public boolean isHeadCrashed()
     {
-        return true;
+        FieldNode headSnake = snake.getHead();
+
+        if (headSnake.getX() == FIELD_WIDTH | headSnake.getY() == FIELD_HEIGHT
+                | headSnake.getX() == -1 | headSnake.getY() == -1)
+            return true;
+
+        for (int i = 1; i < snake.getBody().size(); i++)
+        {
+            if (headSnake.getX() ==  snake.getBody().get(i).getX() & headSnake.getY() == snake.getBody().get(i).getY())
+                return true;
+        }
+
+        return false;
     }
+
 }

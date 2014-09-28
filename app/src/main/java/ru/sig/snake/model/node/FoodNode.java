@@ -1,20 +1,28 @@
 package ru.sig.snake.model.node;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 /**
  * Created by Valentin Goncharov on 27.09.2014.
  */
-public class FoodNode extends FieldNode
-{
-    public FoodNode(int x, int y)
-    {
+public class FoodNode extends FieldNode {
+    public FoodNode(int x, int y) {
         super(x, y);
     }
 
     @Override
-    public void onDraw(Canvas viewCanvas)
-    {
+    public void onDraw(Canvas viewCanvas) {
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setAntiAlias(true);
+        paint.setColor(Color.RED);
 
+        viewCanvas.drawCircle(
+                (getX() * getWidth()) + getWidth() / 2,
+                (getY() * getHeight()) + getHeight() / 2,
+                getWidth() / 2,
+                paint);            //was moved to HeadSnakeNode
     }
 }

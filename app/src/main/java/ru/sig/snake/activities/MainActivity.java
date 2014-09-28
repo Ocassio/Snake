@@ -18,12 +18,7 @@ public class MainActivity extends Activity {
         GameView gameView = new GameView(this);
         GameLogic gameLogic = new GameLogic();
         setContentView(gameView);
-
-        gameLogic.startGame(0,gameView,this);
-
-
-
-        //setContentView(R.layout.activity_main);
+        gameLogic.startGame(0,gameView);
 
     }
 
