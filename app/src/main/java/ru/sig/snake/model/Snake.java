@@ -29,6 +29,7 @@ public class Snake
     public Snake(int x, int y, int length)
     {
         body = new LinkedList<FieldNode>();
+
         body.add(new HeadSnakeNode(x,y));
 
         for (int i = 1; i < length; i++)

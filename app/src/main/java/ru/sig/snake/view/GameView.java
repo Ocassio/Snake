@@ -62,28 +62,21 @@ public class GameView extends View
         {
             food.onDraw(canvas);
         }
-
-
     }
 
     private void calculateNodeDimensions(int width, int height)
     {
-        if (GameLogic.FIELD_WIDTH < GameLogic.FIELD_HEIGHT)
-        {
-            FieldNode.setWidth(width / GameLogic.FIELD_WIDTH);
-            FieldNode.setHeight(width / GameLogic.FIELD_HEIGHT);
-        }
-        else
-        {
-            FieldNode.setWidth(height / GameLogic.FIELD_WIDTH);
-            FieldNode.setHeight(height / GameLogic.FIELD_HEIGHT);
-        }
+        int min = (width < height
+                ? width : height);
+            FieldNode.setWidth(min / GameLogic.FIELD_WIDTH);
+            FieldNode.setHeight(min / GameLogic.FIELD_HEIGHT);
     }
 
     public void setNodesToDraw(List<FieldNode> nodesToDraw)
     {
         this.nodesToDraw = nodesToDraw;
     }
+
     public void setSnake(Snake snake)
     {
         this.snake = snake;
@@ -93,8 +86,4 @@ public class GameView extends View
     {
         this.food = food;
     }
-
-
-
-
 }

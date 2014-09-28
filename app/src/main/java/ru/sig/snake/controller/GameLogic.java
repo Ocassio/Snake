@@ -33,8 +33,8 @@ public class GameLogic
 
     private int resultOfMove;
     
-    public final static int FIELD_WIDTH = 40;      //count of nodes in width of display
-    public final static int FIELD_HEIGHT = 40;     //count of nodes in height of display
+    public static int FIELD_WIDTH = 40;      //count of nodes in width of display
+    public static int FIELD_HEIGHT = 40;     //count of nodes in height of display
 
     private int SNAKE_FOUND_NOTHING = 0;            //this node is free
     private int SNAKE_FOUND_FOOD = 1;            //on this node food
@@ -51,21 +51,19 @@ public class GameLogic
 
     public void startGame(int difficulty, final GameView snakeView)
     {
-        snake= new Snake(10, 10, 14);
+        snake = new Snake(1, 1, 38);
         nodesToDraw = new LinkedList<FieldNode>();
         this.snakeView = snakeView;
         snakeView.setSnake(snake);
-
+    //    nodesToDraw.addAll(snake.getBody());
+    //    snakeView.setNodesToDraw(nodesToDraw);
+        generateFood();
 
         timer = new Timer();
         timer.schedule(new SnakeTimerTask(this),DEFAULT_DELAY,SNAKE_SPEED) ;
 
-        generateFood();
 
-        this.activity= (Activity) snakeView.getContext();
-
-        MediaPlayer mediaPlayer1 = MediaPlayer.create(activity,R.raw.nyancat);
-        mediaPlayer1.start();
+        this.activity = (Activity) snakeView.getContext();
 
         snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext()) {
             public void onSwipeTop() {
@@ -127,7 +125,7 @@ public class GameLogic
             resultOfMove = SNAKE_FOUND_FOOD;
             snake.setSatiety(2);
             generateFood();
-            SNAKE_SPEED+= 20;
+            SNAKE_SPEED += 20;
         }
         else if (isHeadCrashed())
         {
@@ -154,17 +152,18 @@ public class GameLogic
         return resultOfMove;
     }
 
-    public void generateFood()
+    private void generateFood()
     {
         Random random = new Random();
         int foodx = random.nextInt(FIELD_WIDTH);
         int foody = random.nextInt(FIELD_HEIGHT);
         food = new FoodNode(foodx,foody);
+  //      nodesToDraw.add(food);
         snakeView.setFood(food);
 
     }
 
-    public boolean isHeadCrashed()
+    private boolean isHeadCrashed()
     {
         FieldNode headSnake = snake.getHead();
 

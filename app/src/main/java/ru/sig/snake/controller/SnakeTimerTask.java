@@ -19,8 +19,6 @@ public class SnakeTimerTask extends TimerTask
     @Override
     public void run()
     {
-
-
         logic.move();
     }
 }
