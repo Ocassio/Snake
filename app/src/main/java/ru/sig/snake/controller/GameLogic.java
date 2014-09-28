@@ -51,7 +51,7 @@ public class GameLogic
 
     public void startGame(int difficulty, final GameView snakeView)
     {
-        snake= new Snake(10, 10, 14);
+        snake= new Snake(20, 20, 14);
         nodesToDraw = new LinkedList<FieldNode>();
         this.snakeView = snakeView;
         snakeView.setSnake(snake);
