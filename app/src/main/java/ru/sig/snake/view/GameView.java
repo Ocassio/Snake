@@ -8,7 +8,9 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import ru.sig.snake.controller.GameLogic;
+import ru.sig.snake.model.Snake;
 import ru.sig.snake.model.node.FieldNode;
+import ru.sig.snake.model.node.HeadSnakeNode;
 import ru.sig.snake.model.node.SnakeNode;
 
 /**
@@ -29,14 +31,15 @@ public class GameView extends View
     @Override
     protected void onDraw(Canvas canvas)
     {
+
         calculateNodeDimensions(canvas.getWidth(), canvas.getHeight());
         super.onDraw(canvas);
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.WHITE);
         canvas.drawPaint(paint);
-        FieldNode node = new SnakeNode(0, 0);
-        node.onDraw(canvas);
+        Snake snake= new Snake(0, 0, Snake.DIRECTION_EAST);
+        snake.drawSnake(canvas);
 
     }
 

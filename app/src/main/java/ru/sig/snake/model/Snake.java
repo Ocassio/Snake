@@ -1,5 +1,7 @@
 package ru.sig.snake.model;
 
+import android.graphics.Canvas;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import ru.sig.snake.exceptions.InvalidDirectionException;
 import ru.sig.snake.model.node.FieldNode;
 import ru.sig.snake.model.node.HeadSnakeNode;
 import ru.sig.snake.model.node.SnakeNode;
+import ru.sig.snake.view.GameView;
 
 /**
  * Created by Alexander Ionov on 27.09.14.
@@ -18,16 +21,19 @@ public class Snake
     public static final int DIRECTION_SOUTH = 2;
     public static final int DIRECTION_WEST = 3;
 
-
+    private GameView gameView;
     private final List<FieldNode> body;
     private int direction = DIRECTION_EAST;
     private int satiety = 0;
 
     public Snake(int x, int y, int length)
     {
+        this.gameView = gameView;
         body = new LinkedList<FieldNode>();
         setSatiety(length);
         setDirection(direction);
+        FieldNode head = new HeadSnakeNode(0,0);
+        body.add(head);
     }
 
     public FieldNode getHead()
@@ -97,6 +103,14 @@ public class Snake
         else
         {
             body.remove(body.size() - 1);
+        }
+    }
+
+    public void drawSnake(Canvas canvas)
+    {
+        for (FieldNode snakeNode : body)
+        {
+            snakeNode.onDraw(canvas);
         }
     }
 

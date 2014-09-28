@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ru.sig.snake.R;
+import ru.sig.snake.controller.GameLogic;
 import ru.sig.snake.view.GameView;
 
 
@@ -15,7 +16,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         GameView gameView = new GameView(this);
+        GameLogic gameLogic = new GameLogic();
         setContentView(gameView);
+
+        gameLogic.startGame(0,gameView,this);
 
         //setContentView(R.layout.activity_main);
 
@@ -38,6 +42,9 @@ public class MainActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
+
+
 }

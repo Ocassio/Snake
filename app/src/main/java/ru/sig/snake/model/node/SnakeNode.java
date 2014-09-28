@@ -25,6 +25,6 @@ public class SnakeNode extends FieldNode
 
         viewCanvas.drawCircle((getX() + getWidth())/2,
                 (getX() + getWidth())/2,
-                (getY() + getHeight())/2,paint);
+                (getY() + getHeight())/2,paint);             //was moved to HeadSnakeNode
     }
 }
