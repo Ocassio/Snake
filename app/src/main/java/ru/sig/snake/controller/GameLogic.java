@@ -54,9 +54,9 @@ public class GameLogic
         snake= new Snake(10, 10, 14);
         nodesToDraw = new LinkedList<FieldNode>();
         this.snakeView = snakeView;
-
-        nodesToDraw.addAll(snake.getBody());
-        snakeView.setNodesToDraw(nodesToDraw);
+        snakeView.setSnake(snake);
+   //     nodesToDraw.addAll(snake.getBody());
+    //    snakeView.setNodesToDraw(nodesToDraw);
 
         timer = new Timer();
         timer.schedule(new SnakeTimerTask(this),DEFAULT_DELAY,SNAKE_SPEED) ;
@@ -158,7 +158,8 @@ public class GameLogic
         int foodx = random.nextInt(FIELD_WIDTH);
         int foody = random.nextInt(FIELD_HEIGHT);
         food = new FoodNode(foodx,foody);
-        nodesToDraw.add(food);
+  //      nodesToDraw.add(food);
+        snakeView.setFood(food);
 
     }
 

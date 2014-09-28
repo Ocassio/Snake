@@ -26,6 +26,9 @@ import ru.sig.snake.model.node.SnakeNode;
 public class GameView extends View
 {
     private List<FieldNode> nodesToDraw;
+    private Snake snake;
+    private FieldNode food;
+
 
     public GameView(Context context, AttributeSet attrs)
     {
@@ -65,10 +68,18 @@ public class GameView extends View
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.WHITE);
         canvas.drawPaint(paint);
-        if (!nodesToDraw.isEmpty())
+/*        if (!nodesToDraw.isEmpty())
         {
             for (FieldNode fieldNode : nodesToDraw)
                 fieldNode.onDraw(canvas);
+        } */
+        if (snake != null)
+        {
+            snake.drawSnake(canvas);
+        }
+        if (food != null)
+        {
+            food.onDraw(canvas);
         }
 
 
@@ -83,6 +94,15 @@ public class GameView extends View
     public void setNodesToDraw(List<FieldNode> nodesToDraw)
     {
         this.nodesToDraw = nodesToDraw;
+    }
+    public void setSnake(Snake snake)
+    {
+        this.snake = snake;
+    }
+
+    public void setFood(FieldNode food)
+    {
+        this.food = food;
     }
 
 
