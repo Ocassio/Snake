@@ -20,7 +20,7 @@ public class HeadSnakeNode extends SnakeNode
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.rgb(2, 65, 67));
 
         viewCanvas.drawCircle(
                 (getX() * getWidth()) + getWidth()/2,

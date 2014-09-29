@@ -25,7 +25,10 @@ import ru.sig.snake.view.GameView;
 public class GameLogic
 {
     private static final long DEFAULT_DELAY = 100;
-    private static long SNAKE_SPEED = 200;
+    private static final long DEFAULT_SPEED = 200;
+    private static final long SPEED_CHANGE_STEP = 20;
+
+    private long snakeSpeed;
     private static final int START_SNAKE_SIZE = 4;
 
     private int resultOfMove;
@@ -43,6 +46,9 @@ public class GameLogic
     private int difficulty;
     public Activity activity;
     private Timer timer;
+
+    //TODO: Maybe we should use singleton instead?
+    private static final int TRACKS_COUNT = 2;
     private MediaPlayer mediaPlayer;
 
     public GameLogic(final GameView snakeView)
@@ -58,8 +64,9 @@ public class GameLogic
 
         snake= new Snake(field, 10, 10, 14);
 
+        snakeSpeed = DEFAULT_SPEED;
         timer = new Timer();
-        timer.schedule(new SnakeTimerTask(this), DEFAULT_DELAY, SNAKE_SPEED) ;
+        timer.schedule(new SnakeTimerTask(this), DEFAULT_DELAY, snakeSpeed) ;
 
         generateFood();
 
@@ -85,15 +92,7 @@ public class GameLogic
             }
         });
 
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                MediaPlayer mediaPlayer1 = MediaPlayer.create(activity, selectMusic());
-                mediaPlayer1.start();
-            }
-        }).start();
+        startMusic();
     }
 
     public void pause()
@@ -132,7 +131,10 @@ public class GameLogic
                 resultOfMove = SNAKE_FOUND_FOOD;
                 snake.setSatiety(2);
                 generateFood();
-                SNAKE_SPEED -= 20;
+                if (snakeSpeed > SPEED_CHANGE_STEP)
+                {
+                    snakeSpeed -= SPEED_CHANGE_STEP;
+                }
             }
             else if (moveResult instanceof SnakeNode || moveResult instanceof ObstacleNode)
             {
@@ -188,6 +190,7 @@ public class GameLogic
     private void gameover()
     {
         timer.cancel();
+        playGameOverSound();
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setCancelable(false);
         builder.setTitle(activity.getString(R.string.loseTitle));
@@ -209,18 +212,75 @@ public class GameLogic
         builder.show();
     }
 
+    private void startMusic()
+    {
+        startMusic(-1);
+    }
+
+    private void startMusic(int previousTrackId)
+    {
+        final int trackId = selectMusic(previousTrackId);
+        if (mediaPlayer != null)
+        {
+            mediaPlayer.release();
+        }
+        mediaPlayer = MediaPlayer.create(activity, trackId);
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+        {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer)
+            {
+                mediaPlayer.release();
+                startMusic(trackId);
+            }
+        });
+        mediaPlayer.start();
+    }
+
     private int selectMusic()
     {
-        Random random = new Random();
-        int choice = random.nextInt(2);
-        switch (choice)
-        {
-            case 1:
-                return R.raw.sunnyglade;
+        return selectMusic(-1);
+    }
 
-            default:
-                return R.raw.nyancat;
+    private int selectMusic(int previousTrackId)
+    {
+        Random random = new Random();
+        int trackId;
+        do
+        {
+            int choice = random.nextInt(TRACKS_COUNT);
+            switch (choice)
+            {
+                case 1:
+                    trackId = R.raw.sunnyglade;
+                    break;
+
+                default:
+                    trackId = R.raw.nyancat;
+                    break;
+            }
         }
+        while (previousTrackId != -1 && TRACKS_COUNT > 1 && previousTrackId == trackId);
+
+        return trackId;
+    }
+
+    private void playGameOverSound()
+    {
+        if (mediaPlayer != null)
+        {
+            mediaPlayer.release();
+        }
+        mediaPlayer = MediaPlayer.create(activity, R.raw.udied);
+        mediaPlayer.start();
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+        {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer)
+            {
+                mediaPlayer.release();
+            }
+        });
     }
 
 }
