@@ -90,7 +90,7 @@ public class GameLogic
             @Override
             public void run()
             {
-                MediaPlayer mediaPlayer1 = MediaPlayer.create(activity, R.raw.nyancat);
+                MediaPlayer mediaPlayer1 = MediaPlayer.create(activity, selectMusic());
                 mediaPlayer1.start();
             }
         }).start();
@@ -207,6 +207,20 @@ public class GameLogic
         });
         builder.create();
         builder.show();
+    }
+
+    private int selectMusic()
+    {
+        Random random = new Random();
+        int choice = random.nextInt(2);
+        switch (choice)
+        {
+            case 1:
+                return R.raw.sunnyglade;
+
+            default:
+                return R.raw.nyancat;
+        }
     }
 
 }
