@@ -14,16 +14,22 @@ import ru.sig.snake.view.GameView;
 
 public class GameActivity extends Activity {
 
+    private GameLogic gameLogic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GameView gameView = new GameView(this);
-        GameLogic gameLogic = new GameLogic(gameView);
-        setContentView(gameView);
-        gameLogic.startGame(0);
-        /*SnakeMediaPlayer snakeMediaPlayer = new SnakeMediaPlayer(this);
-        snakeMediaPlayer.execute();*/
 
+        GameView gameView = new GameView(this);
+        setContentView(gameView);
+
+        gameLogic = GameLogic.getInstance();
+        gameLogic.setView(gameView);
+
+        if (gameLogic.getState() == GameLogic.STATE_STOPPED)
+        {
+            gameLogic.startGame(0);
+        }
     }
 
 

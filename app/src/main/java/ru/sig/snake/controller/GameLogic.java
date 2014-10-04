@@ -11,6 +11,7 @@ import java.util.Random;
 import java.util.Timer;
 
 import ru.sig.snake.R;
+import ru.sig.snake.exceptions.NoViewIsSetException;
 import ru.sig.snake.model.Snake;
 import ru.sig.snake.model.node.FieldNode;
 import ru.sig.snake.model.node.FoodNode;
@@ -24,12 +25,20 @@ import ru.sig.snake.view.GameView;
  */
 public class GameLogic
 {
+    private static GameLogic instance;
+
+    public static final int STATE_STOPPED = 0;
+    public static final int STATE_STARTED = 1;
+    public static final int STATE_PAUSED = 2;
+
+    private int state = STATE_STOPPED;
+
     private static final long DEFAULT_DELAY = 100;
     private static final long DEFAULT_SPEED = 200;
     private static final long SPEED_CHANGE_STEP = 20;
 
     private long snakeSpeed;
-    private static final int START_SNAKE_SIZE = 4;
+    private static final int START_SNAKE_SIZE = 4; //TODO: Use this field
 
     private int resultOfMove;
     
@@ -41,26 +50,57 @@ public class GameLogic
     private int SNAKE_FOUND_OBSTACLE = 2;        //on this node obstacle or snakeNode
 
     private GameView snakeView;
-    private List<FieldNode> field;
+    private Activity activity;
+
+    private List<FieldNode> field = new ArrayList<FieldNode>();
     private Snake snake;
     private int difficulty;
-    public Activity activity;
     private Timer timer;
 
     //TODO: Maybe we should use singleton instead?
     private static final int TRACKS_COUNT = 2;
     private MediaPlayer mediaPlayer;
 
-    public GameLogic(final GameView snakeView)
+    public static GameLogic getInstance()
     {
-        this.snakeView = snakeView;
-        this.activity = (Activity) snakeView.getContext();
+        if (instance == null)
+        {
+            synchronized (GameLogic.class)
+            {
+                if (instance == null)
+                {
+                    instance = new GameLogic();
+                }
+            }
+        }
+
+        return instance;
+    }
+
+    private GameLogic() { }
+
+    public void setView(GameView view)
+    {
+        snakeView = view;
+        activity = (Activity) snakeView.getContext();
+
+        snakeView.setField(field);
+
+        if (snake != null)
+        {
+            setOnTouchListeners();
+        }
     }
 
     public void startGame(int difficulty)
     {
-        this.field = new ArrayList<FieldNode>();
-        this.snakeView.setField(field);
+        if (snakeView == null)
+        {
+            throw new NoViewIsSetException();
+        }
+
+        field = new ArrayList<FieldNode>();
+        snakeView.setField(field);
 
         snake= new Snake(field, 10, 10, 14);
 
@@ -70,48 +110,40 @@ public class GameLogic
 
         generateFood();
 
-        snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext()) {
-            public void onSwipeTop() {
-                if (Snake.DIRECTION_SOUTH != snake.getDirection())
-                    snake.setDirection(Snake.DIRECTION_NORTH);
-            }
-
-            public void onSwipeRight() {
-                if (Snake.DIRECTION_WEST != snake.getDirection())
-                    snake.setDirection(Snake.DIRECTION_EAST);
-            }
-
-            public void onSwipeLeft() {
-                if (Snake.DIRECTION_EAST != snake.getDirection())
-                    snake.setDirection(Snake.DIRECTION_WEST);
-            }
-
-            public void onSwipeBottom() {
-                if (Snake.DIRECTION_NORTH != snake.getDirection())
-                    snake.setDirection(Snake.DIRECTION_SOUTH);
-            }
-        });
+        setOnTouchListeners();
 
         startMusic();
+
+        state = STATE_STARTED;
     }
 
     public void pause()
     {
-
+        state = STATE_PAUSED;
     }
 
     public void resume()
     {
-
+        state = STATE_STARTED;
     }
 
     public void exit()
     {
+        state = STATE_STOPPED;
+    }
 
+    public int getState()
+    {
+        return state;
     }
 
     public void move()
     {
+        if (snakeView == null)
+        {
+            throw new NoViewIsSetException();
+        }
+
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -279,6 +311,31 @@ public class GameLogic
             public void onCompletion(MediaPlayer mediaPlayer)
             {
                 mediaPlayer.release();
+            }
+        });
+    }
+
+    private void setOnTouchListeners()
+    {
+        snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext()) {
+            public void onSwipeTop() {
+                if (Snake.DIRECTION_SOUTH != snake.getDirection())
+                    snake.setDirection(Snake.DIRECTION_NORTH);
+            }
+
+            public void onSwipeRight() {
+                if (Snake.DIRECTION_WEST != snake.getDirection())
+                    snake.setDirection(Snake.DIRECTION_EAST);
+            }
+
+            public void onSwipeLeft() {
+                if (Snake.DIRECTION_EAST != snake.getDirection())
+                    snake.setDirection(Snake.DIRECTION_WEST);
+            }
+
+            public void onSwipeBottom() {
+                if (Snake.DIRECTION_NORTH != snake.getDirection())
+                    snake.setDirection(Snake.DIRECTION_SOUTH);
             }
         });
     }
