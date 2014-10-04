@@ -219,6 +219,12 @@ public class GameLogic
     {
         timer.cancel();
         SnakeMusicPlayer.getInstance().playGameOverSound(activity);
+        state = STATE_STOPPED;
+        showGameOverDialog();
+    }
+
+    private void showGameOverDialog()
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setCancelable(false);
         builder.setTitle(activity.getString(R.string.loseTitle));
@@ -232,6 +238,7 @@ public class GameLogic
         builder.setNegativeButton(activity.getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                SnakeMusicPlayer.getInstance().stopMusic();
                 activity.finish();
                 dialogInterface.cancel();
             }
