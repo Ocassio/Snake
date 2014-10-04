@@ -57,10 +57,6 @@ public class GameLogic
     private int difficulty;
     private Timer timer;
 
-    //TODO: Maybe we should use singleton instead?
-    private static final int TRACKS_COUNT = 2;
-    private MediaPlayer mediaPlayer;
-
     public static GameLogic getInstance()
     {
         if (instance == null)
@@ -112,7 +108,7 @@ public class GameLogic
 
         setOnTouchListeners();
 
-        startMusic();
+        SnakeMusicPlayer.getInstance().playMusic(activity);
 
         state = STATE_STARTED;
     }
@@ -222,7 +218,7 @@ public class GameLogic
     private void gameover()
     {
         timer.cancel();
-        playGameOverSound();
+        SnakeMusicPlayer.getInstance().playGameOverSound(activity);
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setCancelable(false);
         builder.setTitle(activity.getString(R.string.loseTitle));
@@ -242,77 +238,6 @@ public class GameLogic
         });
         builder.create();
         builder.show();
-    }
-
-    private void startMusic()
-    {
-        startMusic(-1);
-    }
-
-    private void startMusic(int previousTrackId)
-    {
-        final int trackId = selectMusic(previousTrackId);
-        if (mediaPlayer != null)
-        {
-            mediaPlayer.release();
-        }
-        mediaPlayer = MediaPlayer.create(activity, trackId);
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
-        {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer)
-            {
-                mediaPlayer.release();
-                startMusic(trackId);
-            }
-        });
-        mediaPlayer.start();
-    }
-
-    private int selectMusic()
-    {
-        return selectMusic(-1);
-    }
-
-    private int selectMusic(int previousTrackId)
-    {
-        Random random = new Random();
-        int trackId;
-        do
-        {
-            int choice = random.nextInt(TRACKS_COUNT);
-            switch (choice)
-            {
-                case 1:
-                    trackId = R.raw.sunnyglade;
-                    break;
-
-                default:
-                    trackId = R.raw.nyancat;
-                    break;
-            }
-        }
-        while (previousTrackId != -1 && TRACKS_COUNT > 1 && previousTrackId == trackId);
-
-        return trackId;
-    }
-
-    private void playGameOverSound()
-    {
-        if (mediaPlayer != null)
-        {
-            mediaPlayer.release();
-        }
-        mediaPlayer = MediaPlayer.create(activity, R.raw.udied);
-        mediaPlayer.start();
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
-        {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer)
-            {
-                mediaPlayer.release();
-            }
-        });
     }
 
     private void setOnTouchListeners()
