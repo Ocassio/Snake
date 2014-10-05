@@ -105,6 +105,7 @@ public class GameLogic
         timer.schedule(new SnakeTimerTask(this), DEFAULT_DELAY, snakeSpeed) ;
 
         generateFood();
+        generateObstacles();
 
         setOnTouchListeners();
 
@@ -182,10 +183,6 @@ public class GameLogic
         {
             resultOfMove = SNAKE_FOUND_NOTHING;
         }
-        if (isSnakeReachedBorder())
-        {
-            resultOfMove = SNAKE_FOUND_OBSTACLE;
-        }
 
         if (resultOfMove == SNAKE_FOUND_OBSTACLE)
         {
@@ -213,15 +210,29 @@ public class GameLogic
         }
     }
 
-    private boolean isSnakeReachedBorder()
+    private void generateObstacles()
     {
-        FieldNode headSnake = snake.getHead();
+        int hEntranceSize = FIELD_WIDTH % 2 == 0 ? 2 : 3;
+        int hEntranceStart = FIELD_WIDTH / 2 - 1;
+        for (int x = 0; x < FIELD_HEIGHT; x++)
+        {
+            if (x < hEntranceStart || x > hEntranceStart + hEntranceSize)
+            {
+                field.add(new ObstacleNode(x, 0));
+                field.add(new ObstacleNode(x, FIELD_WIDTH - 1));
+            }
+        }
 
-        if (headSnake.getX() == FIELD_WIDTH | headSnake.getY() == FIELD_HEIGHT
-                | headSnake.getX() == -1 | headSnake.getY() == -1)
-            return true;
-
-        return false;
+        int vEntranceSize = FIELD_HEIGHT % 2 == 0 ? 2 : 3;
+        int vEntranceStart = FIELD_HEIGHT / 2 - 1;
+        for (int y = 0; y < FIELD_HEIGHT; y++)
+        {
+            if (y < vEntranceStart || y > vEntranceStart + vEntranceSize)
+            {
+                field.add(new ObstacleNode(0, y));
+                field.add(new ObstacleNode(FIELD_HEIGHT - 1, y));
+            }
+        }
     }
 
     private void gameover()

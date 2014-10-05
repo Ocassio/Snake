@@ -20,9 +20,9 @@ public class FoodNode extends FieldNode {
         paint.setColor(Color.RED);
 
         viewCanvas.drawCircle(
-                (getX() * getWidth()) + getWidth() / 2,
-                (getY() * getHeight()) + getHeight() / 2,
+                getLeftTopX() + getWidth() / 2,
+                getLeftTopY() + getHeight() / 2,
                 getWidth() / 2,
-                paint);            //was moved to HeadSnakeNode
+                paint);
     }
 }

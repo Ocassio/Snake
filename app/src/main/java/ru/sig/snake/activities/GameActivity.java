@@ -7,7 +7,6 @@ import android.view.MenuItem;
 
 import ru.sig.snake.R;
 import ru.sig.snake.controller.GameLogic;
-//import ru.sig.snake.controller.SnakeMediaPlayer;
 
 import ru.sig.snake.controller.SnakeMusicPlayer;
 import ru.sig.snake.view.GameView;
@@ -86,9 +85,21 @@ public class GameActivity extends Activity {
     @Override
     protected void onPause()
     {
-        pause();
         SnakeMusicPlayer.getInstance().pauseMusic();
         super.onPause();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus)
+    {
+        if (!hasFocus)
+        {
+            if (gameLogic.getState() == GameLogic.STATE_STARTED)
+            {
+                pause();
+            }
+        }
+        super.onWindowFocusChanged(hasFocus);
     }
 
     @Override

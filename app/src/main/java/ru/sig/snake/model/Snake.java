@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import java.util.LinkedList;
 import java.util.List;
 
+import ru.sig.snake.controller.GameLogic;
 import ru.sig.snake.exceptions.InvalidDirectionException;
 import ru.sig.snake.model.node.FieldNode;
 import ru.sig.snake.model.node.HeadSnakeNode;
@@ -106,6 +107,23 @@ public class Snake
 
             default:
                 throw new InvalidDirectionException();
+        }
+
+        if (x == GameLogic.FIELD_WIDTH)
+        {
+            x -= GameLogic.FIELD_WIDTH;
+        }
+        else if (x == -1)
+        {
+            x += GameLogic.FIELD_WIDTH;
+        }
+        if (y == GameLogic.FIELD_HEIGHT)
+        {
+            y -= GameLogic.FIELD_HEIGHT;
+        }
+        else if (y == -1)
+        {
+            y += GameLogic.FIELD_HEIGHT;
         }
 
         HeadSnakeNode newHead = new HeadSnakeNode(x, y);

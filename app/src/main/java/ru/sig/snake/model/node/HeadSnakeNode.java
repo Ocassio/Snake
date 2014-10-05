@@ -23,8 +23,8 @@ public class HeadSnakeNode extends SnakeNode
         paint.setColor(Color.rgb(2, 65, 67));
 
         viewCanvas.drawCircle(
-                (getX() * getWidth()) + getWidth()/2,
-                (getY() * getHeight()) + getHeight()/2,
+                getLeftTopX() + getWidth()/2,
+                getLeftTopY() + getHeight()/2,
                 getWidth()/2,
                 paint);
     }

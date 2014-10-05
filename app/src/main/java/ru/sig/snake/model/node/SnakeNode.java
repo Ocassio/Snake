@@ -26,8 +26,8 @@ public class SnakeNode extends FieldNode
         paint.setColor(Color.BLACK);
 
         viewCanvas.drawCircle(
-                (getX() * getWidth()) + getWidth()/2,
-                (getY() * getHeight()) + getHeight()/2,
+                getLeftTopX() + getWidth()/2,
+                getLeftTopY() + getHeight()/2,
                 getWidth()/2,
                 paint);            //was moved to HeadSnakeNode
     }

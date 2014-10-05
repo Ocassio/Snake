@@ -61,6 +61,16 @@ public abstract class FieldNode
         heightNode = height;
     }
 
+    protected float getLeftTopX()
+    {
+        return x * widthNode;
+    }
+
+    protected float getLeftTopY()
+    {
+        return y * heightNode;
+    }
+
     abstract public void draw(Canvas viewCanvas);
 
     @Override
