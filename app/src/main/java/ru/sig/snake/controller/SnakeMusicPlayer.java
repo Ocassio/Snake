@@ -43,6 +43,16 @@ public class SnakeMusicPlayer
         startMusic();
     }
 
+    public void pauseMusic()
+    {
+        mediaPlayer.pause();
+    }
+
+    public void resumeMusic()
+    {
+        mediaPlayer.start();
+    }
+
     public void stopMusic()
     {
         mediaPlayer.release();

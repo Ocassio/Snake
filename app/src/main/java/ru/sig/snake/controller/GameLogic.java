@@ -116,16 +116,24 @@ public class GameLogic
     public void pause()
     {
         state = STATE_PAUSED;
+        timer.cancel();
+        removeOnTouchListeners();
     }
 
     public void resume()
     {
         state = STATE_STARTED;
+        timer = new Timer();
+        setOnTouchListeners();
+        timer.schedule(new SnakeTimerTask(this), DEFAULT_DELAY, snakeSpeed);
     }
 
     public void exit()
     {
         state = STATE_STOPPED;
+        timer.cancel();
+        SnakeMusicPlayer.getInstance().stopMusic();
+        activity.finish();
     }
 
     public int getState()
@@ -159,10 +167,11 @@ public class GameLogic
                 resultOfMove = SNAKE_FOUND_FOOD;
                 snake.setSatiety(2);
                 generateFood();
-                if (snakeSpeed > SPEED_CHANGE_STEP)
-                {
-                    snakeSpeed -= SPEED_CHANGE_STEP;
-                }
+                //TODO: We should write custom timer if we want to use this
+//                if (snakeSpeed > SPEED_CHANGE_STEP)
+//                {
+//                    snakeSpeed -= SPEED_CHANGE_STEP;
+//                }
             }
             else if (moveResult instanceof SnakeNode || moveResult instanceof ObstacleNode)
             {
@@ -270,6 +279,11 @@ public class GameLogic
                     snake.setDirection(Snake.DIRECTION_SOUTH);
             }
         });
+    }
+
+    private void removeOnTouchListeners()
+    {
+        snakeView.setOnTouchListener(null);
     }
 
 }

@@ -6,6 +6,8 @@
 
     <string name="newGame">Новая игра</string>
 
+    <string name="action_resume">Продолжить</string>
+    <string name="action_pause">Пауза</string>
     <string name="action_settings">Параметры</string>
 
     <string name="loseTitle">Ты проиграл, ублюдок!</string>
