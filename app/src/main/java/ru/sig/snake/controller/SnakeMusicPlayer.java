@@ -45,17 +45,24 @@ public class SnakeMusicPlayer
 
     public void pauseMusic()
     {
-        mediaPlayer.pause();
+        if (mediaPlayer != null)
+        {
+            mediaPlayer.pause();
+        }
     }
 
     public void resumeMusic()
     {
-        mediaPlayer.start();
+        if (mediaPlayer != null)
+        {
+            mediaPlayer.start();
+        }
     }
 
     public void stopMusic()
     {
         mediaPlayer.release();
+        mediaPlayer = null;
     }
 
     private void startMusic()
