@@ -3,6 +3,8 @@ package ru.sig.snake.controller;
 import android.app.Activity;
 import android.media.MediaPlayer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import ru.sig.snake.R;
@@ -14,8 +16,12 @@ public class SnakeMusicPlayer
 {
     private static SnakeMusicPlayer instance;
 
+    private static final float MUSIC_VOLUME = 0.5f;
+    private static final float SOUND_VOLUME = 1f;
+
     private static final int TRACKS_COUNT = 2;
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer music;
+    private final List<MediaPlayer> sounds;
 
     private Activity activity;
 
@@ -35,7 +41,10 @@ public class SnakeMusicPlayer
         return instance;
     }
 
-    private SnakeMusicPlayer() {}
+    private SnakeMusicPlayer()
+    {
+        sounds = new ArrayList<MediaPlayer>();
+    }
 
     public void playMusic(Activity activity)
     {
@@ -45,24 +54,24 @@ public class SnakeMusicPlayer
 
     public void pauseMusic()
     {
-        if (mediaPlayer != null)
+        if (music != null)
         {
-            mediaPlayer.pause();
+            music.pause();
         }
     }
 
     public void resumeMusic()
     {
-        if (mediaPlayer != null)
+        if (music != null)
         {
-            mediaPlayer.start();
+            music.start();
         }
     }
 
     public void stopMusic()
     {
-        mediaPlayer.release();
-        mediaPlayer = null;
+        music.release();
+        music = null;
     }
 
     private void startMusic()
@@ -73,12 +82,13 @@ public class SnakeMusicPlayer
     private void startMusic(int previousTrackId)
     {
         final int trackId = selectMusic(previousTrackId);
-        if (mediaPlayer != null)
+        if (music != null)
         {
-            mediaPlayer.release();
+            music.release();
         }
-        mediaPlayer = MediaPlayer.create(activity, trackId);
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+        music = MediaPlayer.create(activity, trackId);
+        music.setVolume(MUSIC_VOLUME, MUSIC_VOLUME);
+        music.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
         {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer)
@@ -87,7 +97,7 @@ public class SnakeMusicPlayer
                 startMusic(trackId);
             }
         });
-        mediaPlayer.start();
+        music.start();
     }
 
     private int selectMusic()
@@ -122,18 +132,38 @@ public class SnakeMusicPlayer
     {
         this.activity = activity;
 
-        if (mediaPlayer != null)
+        if (music != null)
         {
-            mediaPlayer.release();
+            music.release();
         }
-        mediaPlayer = MediaPlayer.create(activity, R.raw.udied);
-        mediaPlayer.start();
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+        music = MediaPlayer.create(activity, R.raw.udied);
+        music.setVolume(MUSIC_VOLUME, MUSIC_VOLUME);
+        music.start();
+        music.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
         {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer)
             {
                 mediaPlayer.release();
+            }
+        });
+    }
+
+    public void playEatSound(Activity activity)
+    {
+        this.activity = activity;
+
+        final MediaPlayer sound = MediaPlayer.create(activity, R.raw.eatsound);
+        sounds.add(sound);
+        sound.setVolume(SOUND_VOLUME, SOUND_VOLUME);
+        sound.start();
+        sound.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+        {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer)
+            {
+                sound.release();
+                sounds.remove(sound);
             }
         });
     }

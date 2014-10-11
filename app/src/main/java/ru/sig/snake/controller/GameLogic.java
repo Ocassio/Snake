@@ -3,7 +3,6 @@ package ru.sig.snake.controller;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.media.MediaPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,6 +165,7 @@ public class GameLogic
             if (moveResult instanceof FoodNode)
             {
                 resultOfMove = SNAKE_FOUND_FOOD;
+                SnakeMusicPlayer.getInstance().playEatSound(activity);
                 snake.setSatiety(2);
                 generateFood();
                 //TODO: We should write custom timer if we want to use this
