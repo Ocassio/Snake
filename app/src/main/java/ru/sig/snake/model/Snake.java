@@ -1,8 +1,5 @@
 package ru.sig.snake.model;
 
-import android.graphics.Canvas;
-
-import java.util.LinkedList;
 import java.util.List;
 
 import ru.sig.snake.controller.GameLogic;
@@ -10,24 +7,18 @@ import ru.sig.snake.exceptions.InvalidDirectionException;
 import ru.sig.snake.model.node.FieldNode;
 import ru.sig.snake.model.node.HeadSnakeNode;
 import ru.sig.snake.model.node.SnakeNode;
-import ru.sig.snake.view.GameView;
 
 /**
  * Created by Alexander Ionov on 27.09.14.
  */
 public class Snake
 {
-    public static final int DIRECTION_NORTH = 0;
-    public static final int DIRECTION_EAST = 1;
-    public static final int DIRECTION_SOUTH = 2;
-    public static final int DIRECTION_WEST = 3;
-
     private final List<FieldNode> field;
 
     private HeadSnakeNode head;
     private SnakeNode tail;
 
-    private int direction = DIRECTION_EAST;
+    private int direction = Direction.EAST;
     private int satiety = 0;
 
     public Snake(List<FieldNode> field, int x, int y, int length)
@@ -85,22 +76,22 @@ public class Snake
 
         switch (direction)
         {
-            case DIRECTION_NORTH:
+            case Direction.NORTH:
                 x = getHead().getX();
                 y = getHead().getY() - 1;
                 break;
 
-            case DIRECTION_EAST:
+            case Direction.EAST:
                 x = getHead().getX() + 1;
                 y = getHead().getY();
                 break;
 
-            case DIRECTION_SOUTH:
+            case Direction.SOUTH:
                 x = getHead().getX();
                 y = getHead().getY() + 1;
                 break;
 
-            case DIRECTION_WEST:
+            case Direction.WEST:
                 x = getHead().getX() - 1;
                 y = getHead().getY();
                 break;

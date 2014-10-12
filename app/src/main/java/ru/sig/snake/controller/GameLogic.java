@@ -11,6 +11,7 @@ import java.util.Timer;
 
 import ru.sig.snake.R;
 import ru.sig.snake.exceptions.NoViewIsSetException;
+import ru.sig.snake.model.Direction;
 import ru.sig.snake.model.Snake;
 import ru.sig.snake.model.node.FieldNode;
 import ru.sig.snake.model.node.FoodNode;
@@ -271,23 +272,23 @@ public class GameLogic
     {
         snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext()) {
             public void onSwipeTop() {
-                if (Snake.DIRECTION_SOUTH != snake.getDirection())
-                    snake.setDirection(Snake.DIRECTION_NORTH);
+                if (Direction.SOUTH != snake.getDirection())
+                    snake.setDirection(Direction.NORTH);
             }
 
             public void onSwipeRight() {
-                if (Snake.DIRECTION_WEST != snake.getDirection())
-                    snake.setDirection(Snake.DIRECTION_EAST);
+                if (Direction.WEST != snake.getDirection())
+                    snake.setDirection(Direction.EAST);
             }
 
             public void onSwipeLeft() {
-                if (Snake.DIRECTION_EAST != snake.getDirection())
-                    snake.setDirection(Snake.DIRECTION_WEST);
+                if (Direction.EAST != snake.getDirection())
+                    snake.setDirection(Direction.WEST);
             }
 
             public void onSwipeBottom() {
-                if (Snake.DIRECTION_NORTH != snake.getDirection())
-                    snake.setDirection(Snake.DIRECTION_SOUTH);
+                if (Direction.NORTH != snake.getDirection())
+                    snake.setDirection(Direction.SOUTH);
             }
         });
     }
