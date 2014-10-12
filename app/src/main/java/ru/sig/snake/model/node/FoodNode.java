@@ -7,7 +7,7 @@ import android.graphics.Paint;
 /**
  * Created by Valentin Goncharov on 27.09.2014.
  */
-public class FoodNode extends FieldNode {
+public class FoodNode extends PassableNode {
     public FoodNode(int x, int y) {
         super(x, y);
     }

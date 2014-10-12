@@ -8,7 +8,7 @@ import android.graphics.RectF;
 /**
  * Created by Valentin Goncharov on 27.09.2014.
  */
-public class ObstacleNode extends FieldNode
+public class ObstacleNode extends ImpassableNode
 {
     public ObstacleNode(int x, int y)
     {

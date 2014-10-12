@@ -7,7 +7,7 @@ import android.graphics.Paint;
 /**
  * Created by Valentin Goncharov on 27.09.2014.
  */
-public class SnakeNode extends FieldNode
+public class SnakeNode extends ImpassableNode
 {
     public SnakeNode previous;
     public SnakeNode next;
