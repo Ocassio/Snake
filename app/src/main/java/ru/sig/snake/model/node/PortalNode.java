@@ -1,6 +1,7 @@
 package ru.sig.snake.model.node;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 /**
  * Created by Alexander Ionov on 12.10.14.
@@ -65,5 +66,93 @@ public class PortalNode extends ImpassableNode
         //*            *             *
         //*                          *
         //*                          *
+    }
+
+    private void drawArrowOnSouth(Canvas view, Paint paint)
+    {
+        view.drawLine(
+                getLeftTopX() - (getHeight()/2),
+                getLeftTopY() - getWidth(),
+                getLeftTopX() - (getHeight()/2),
+                getLeftTopY(),
+                paint);
+        view.drawLine(
+                getLeftTopX() - getHeight(),
+                getLeftTopY() - (getWidth()/2),
+                getLeftTopX() - (getHeight()/2),
+                getLeftTopY(),
+                paint);
+        view.drawLine(
+                getLeftTopX(),
+                getLeftTopY() - (getWidth()/2),
+                getLeftTopX() - (getHeight()/2),
+                getLeftTopY(),
+                paint);
+    }
+
+    private void drawArrowOnNorth(Canvas view, Paint paint)
+    {
+        view.drawLine(
+                getLeftTopX() - (getHeight()/2),
+                getLeftTopY() - getWidth(),
+                getLeftTopX() - (getHeight()/2),
+                getLeftTopY(),
+                paint);
+        view.drawLine(
+                getLeftTopX() - getHeight(),
+                getLeftTopY() - (getWidth()/2),
+                getLeftTopX() - (getHeight()/2),
+                getLeftTopY() - getWidth(),
+                paint);
+        view.drawLine(
+                getLeftTopX(),
+                getLeftTopY() - (getWidth()/2),
+                getLeftTopX() - (getHeight()/2),
+                getLeftTopY() - getWidth(),
+                paint);
+    }
+
+    private void drawArrowOnWest(Canvas view, Paint paint)
+    {
+        view.drawLine(
+                getLeftTopX() - getHeight(),
+                getLeftTopY() - (getWidth() / 2),
+                getLeftTopX(),
+                getLeftTopY() - (getWidth() / 2),
+                paint);
+        view.drawLine(
+                getLeftTopX() - getHeight(),
+                getLeftTopY() - (getWidth() / 2),
+                getLeftTopX() - (getHeight() / 2),
+                getLeftTopY() - getWidth(),
+                paint);
+        view.drawLine(
+                getLeftTopX() - getHeight(),
+                getLeftTopY() - (getWidth() / 2),
+                getLeftTopX() - (getHeight() / 2),
+                getLeftTopY(),
+                paint);
+    }
+
+    private void drawArrowOnEast(Canvas view, Paint paint)
+    {
+        view.drawLine(
+                getLeftTopX() - getHeight(),
+                getLeftTopY() - (getWidth() / 2),
+                getLeftTopX(),
+                getLeftTopY() - (getWidth() / 2),
+                paint);
+        view.drawLine(
+                getLeftTopX(),
+                getLeftTopY() - (getWidth() / 2),
+                getLeftTopX() - (getHeight() / 2),
+                getLeftTopY() - getWidth(),
+                paint);
+        view.drawLine(
+                getLeftTopX(),
+                getLeftTopY() - (getWidth() / 2),
+                getLeftTopX() - (getHeight() / 2),
+                getLeftTopY(),
+                paint);
     }
 }
