@@ -101,7 +101,6 @@ public class Snake
                 throw new InvalidDirectionException();
         }
 
-        //Processing border crossing
         x = checkXForBorderCrossing(x);
         y = checkYForBorderCrossing(y);
 
@@ -190,7 +189,7 @@ public class Snake
             PortalNode target = portal.getLinkedNode();
             newHead.setX(checkXForBorderCrossing(target.getXByDirection(target.getDirection())));
             newHead.setY(checkYForBorderCrossing(target.getYByDirection(target.getDirection())));
-            checkNewPosition(newHead);
+            return checkNewPosition(newHead);
         }
 
         return portal;
