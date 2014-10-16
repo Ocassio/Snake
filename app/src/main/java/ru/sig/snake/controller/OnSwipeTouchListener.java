@@ -8,7 +8,7 @@ import android.view.View;
 /**
  * Created by Aleksandr Shindin on 28.09.2014.
  */
-public class OnSwipeTouchListener implements View.OnTouchListener {
+public abstract class OnSwipeTouchListener implements View.OnTouchListener {
 
     private final GestureDetector gestureDetector;
 
@@ -63,15 +63,8 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
         }
     }
 
-    public void onSwipeRight() {
-    }
-
-    public void onSwipeLeft() {
-    }
-
-    public void onSwipeTop() {
-    }
-
-    public void onSwipeBottom() {
-    }
+    public abstract void onSwipeRight();
+    public abstract void onSwipeLeft();
+    public abstract void onSwipeTop();
+    public abstract void onSwipeBottom();
 }

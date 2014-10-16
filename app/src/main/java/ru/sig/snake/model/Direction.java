@@ -5,6 +5,7 @@ package ru.sig.snake.model;
  */
 public interface Direction
 {
+    public static final int SAME_PLACE = -1;
     public static final int NORTH = 0;
     public static final int EAST = 1;
     public static final int SOUTH = 2;

@@ -6,6 +6,7 @@ import ru.sig.snake.controller.GameLogic;
 import ru.sig.snake.exceptions.InvalidDirectionException;
 import ru.sig.snake.model.node.FieldNode;
 import ru.sig.snake.model.node.HeadSnakeNode;
+import ru.sig.snake.model.node.PortalNode;
 import ru.sig.snake.model.node.SnakeNode;
 
 /**
@@ -100,22 +101,9 @@ public class Snake
                 throw new InvalidDirectionException();
         }
 
-        if (x == GameLogic.FIELD_WIDTH)
-        {
-            x -= GameLogic.FIELD_WIDTH;
-        }
-        else if (x == -1)
-        {
-            x += GameLogic.FIELD_WIDTH;
-        }
-        if (y == GameLogic.FIELD_HEIGHT)
-        {
-            y -= GameLogic.FIELD_HEIGHT;
-        }
-        else if (y == -1)
-        {
-            y += GameLogic.FIELD_HEIGHT;
-        }
+        //Processing border crossing
+        x = checkXForBorderCrossing(x);
+        y = checkYForBorderCrossing(y);
 
         HeadSnakeNode newHead = new HeadSnakeNode(x, y);
         SnakeNode oldHead = new SnakeNode(getHead().getX(), getHead().getY());
@@ -126,11 +114,9 @@ public class Snake
 
         oldHead.next = newHead;
         newHead.previous = oldHead;
-        if (field.contains(newHead))
-        {
-            result = field.get(field.indexOf(newHead));
-            field.remove(result);
-        }
+
+        result = checkNewPosition(newHead);
+
         field.add(newHead);
         head = newHead;
 
@@ -146,5 +132,67 @@ public class Snake
         }
 
         return result;
+    }
+
+    private int checkXForBorderCrossing(int x)
+    {
+        if (x == GameLogic.FIELD_WIDTH)
+        {
+            return x - GameLogic.FIELD_WIDTH;
+        }
+        else if (x == -1)
+        {
+            return x + GameLogic.FIELD_WIDTH;
+        }
+
+        return x;
+    }
+
+    private int checkYForBorderCrossing(int y)
+    {
+        if (y == GameLogic.FIELD_HEIGHT)
+        {
+            return y - GameLogic.FIELD_HEIGHT;
+        }
+        else if (y == -1)
+        {
+            return y + GameLogic.FIELD_HEIGHT;
+        }
+
+        return y;
+    }
+
+    private FieldNode checkNewPosition(HeadSnakeNode newHead)
+    {
+        FieldNode result = null;
+
+        if (field.contains(newHead))
+        {
+            result = field.get(field.indexOf(newHead));
+            if (result instanceof PortalNode)
+            {
+                result = processPortal(newHead, (PortalNode) result);
+            }
+            else
+            {
+                field.remove(result);
+            }
+        }
+
+        return result;
+    }
+
+    private FieldNode processPortal(HeadSnakeNode newHead, PortalNode portal)
+    {
+        if (portal.getDirectionFrom(newHead.previous) == portal.getDirection()
+                && portal.getType() != PortalNode.TYPE_EXIT)
+        {
+            PortalNode target = portal.getLinkedNode();
+            newHead.setX(checkXForBorderCrossing(target.getXByDirection(target.getDirection())));
+            newHead.setY(checkYForBorderCrossing(target.getYByDirection(target.getDirection())));
+            checkNewPosition(newHead);
+        }
+
+        return portal;
     }
 }

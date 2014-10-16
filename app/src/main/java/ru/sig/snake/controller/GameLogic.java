@@ -15,8 +15,8 @@ import ru.sig.snake.model.Direction;
 import ru.sig.snake.model.Snake;
 import ru.sig.snake.model.node.FieldNode;
 import ru.sig.snake.model.node.FoodNode;
+import ru.sig.snake.model.node.ImpassableNode;
 import ru.sig.snake.model.node.ObstacleNode;
-import ru.sig.snake.model.node.SnakeNode;
 import ru.sig.snake.view.GameView;
 
 
@@ -175,7 +175,7 @@ public class GameLogic
 //                    snakeSpeed -= SPEED_CHANGE_STEP;
 //                }
             }
-            else if (moveResult instanceof SnakeNode || moveResult instanceof ObstacleNode)
+            else if (moveResult instanceof ImpassableNode)
             {
                 resultOfMove = SNAKE_FOUND_OBSTACLE;
             }
@@ -271,21 +271,25 @@ public class GameLogic
     private void setOnTouchListeners()
     {
         snakeView.setOnTouchListener(new OnSwipeTouchListener(activity.getApplicationContext()) {
+            @Override
             public void onSwipeTop() {
                 if (Direction.SOUTH != snake.getDirection())
                     snake.setDirection(Direction.NORTH);
             }
 
+            @Override
             public void onSwipeRight() {
                 if (Direction.WEST != snake.getDirection())
                     snake.setDirection(Direction.EAST);
             }
 
+            @Override
             public void onSwipeLeft() {
                 if (Direction.EAST != snake.getDirection())
                     snake.setDirection(Direction.WEST);
             }
 
+            @Override
             public void onSwipeBottom() {
                 if (Direction.NORTH != snake.getDirection())
                     snake.setDirection(Direction.SOUTH);
