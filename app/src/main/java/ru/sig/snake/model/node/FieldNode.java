@@ -52,7 +52,7 @@ public abstract class FieldNode
         widthNode = width;
     }
 
-    public float getHeight()
+    public static float getHeight()
     {
         return heightNode;
     }

@@ -1,7 +1,10 @@
 package ru.sig.snake.model.node;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+
+import ru.sig.snake.model.Direction;
 
 /**
  * Created by Alexander Ionov on 12.10.14.
@@ -50,7 +53,7 @@ public class PortalNode extends ImpassableNode
     }
 
     @Override
-    public void draw(Canvas viewCanvas)
+    public void draw(Canvas canvas)
     {
         //----------Concept-----------
         //****************************
@@ -66,6 +69,41 @@ public class PortalNode extends ImpassableNode
         //*            *             *
         //*                          *
         //*                          *
+
+        if (type != TYPE_UNIVERSAL)
+        {
+            Paint paint = new Paint();
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.BLUE);
+
+            int arrowDirection = direction;
+
+            if (type == TYPE_ENTRY)
+            {
+                arrowDirection = Direction.getInvertedDirection(arrowDirection);
+            }
+
+            switch (arrowDirection)
+            {
+                case(Direction.NORTH):
+                    drawArrowOnNorth(canvas, paint);
+                    break;
+
+                case(Direction.SOUTH):
+                    drawArrowOnSouth(canvas, paint);
+                    break;
+
+                case(Direction.EAST):
+                    drawArrowOnEast(canvas, paint);
+                    break;
+
+                case (Direction.WEST):
+                    drawArrowOnWest(canvas, paint);
+                    break;
+            }
+        }
+
+
     }
 
     private void drawArrowOnSouth(Canvas view, Paint paint)

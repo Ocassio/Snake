@@ -17,6 +17,7 @@ import ru.sig.snake.model.node.FieldNode;
 import ru.sig.snake.model.node.FoodNode;
 import ru.sig.snake.model.node.ImpassableNode;
 import ru.sig.snake.model.node.ObstacleNode;
+import ru.sig.snake.model.node.PortalNode;
 import ru.sig.snake.view.GameView;
 
 
@@ -106,6 +107,7 @@ public class GameLogic
 
         generateFood();
         generateObstacles();
+        generatePortals();
 
         setOnTouchListeners();
 
@@ -234,6 +236,17 @@ public class GameLogic
                 field.add(new ObstacleNode(FIELD_HEIGHT - 1, y));
             }
         }
+    }
+
+    private void generatePortals()
+    {
+        PortalNode entry = new PortalNode(30, 30, Direction.WEST, PortalNode.TYPE_ENTRY);
+        PortalNode exit = new PortalNode(5, 30, Direction.NORTH, PortalNode.TYPE_EXIT);
+        entry.setLinkedNode(exit);
+        exit.setLinkedNode(entry);
+
+        field.add(entry);
+        field.add(exit);
     }
 
     private void gameover()
